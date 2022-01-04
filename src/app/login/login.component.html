@@ -1,0 +1,182 @@
+<div class="bg-light">
+    <div id="layoutAuthentication">
+        <div id="layoutAuthentication_content">
+            <main>
+                <div class="container">
+                    <div class="col-lg-5 center">
+                        <img class="center position:relative width=100%" src="/assets/logo_w260.png">
+                        <h3 class="text-center">
+                            <b class="font_clamp" style="font-family: monospace; font-size: 8pt;">Gestão para Igrejas</b>
+                        </h3>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-lg-5" *ngIf="!cadastrando">
+                            <div class="class shadow-lg border-0 rounded-lg mt-1">
+                                <div class="card-header">
+                                    <h3 class="text-center font-weigth-ligth my-4">
+                                        Entrar
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="alert alert-success" *ngIf="mensagemSucesso">
+                                    {{ mensagemSucesso }}
+                                    </div>
+                                    <div class="alert alert-danger" *ngFor="let erro of errors">
+                                        {{ erro }}
+                                    </div>
+                                    <form #loginForm="ngForm" (submit)="onSubmit()">
+                                        <div class="form-group">
+                                            <label class="small mb-1">Login</label>
+                                            <input type="text" name="login"
+                                                autocomplete="off"
+                                                [(ngModel)]="usuario.login"
+                                                class="form-control py-4"
+                                                placeholder="Digite seu login"/>
+                                           <!-- <form [formGroup]="form" (submit)="onSubmit()">
+                                                <div class="form-group">
+                                                    <label class="small mb-1">Login</label>
+                                                    <input formControlName="login" matInput
+                                                        type="text" name="login"
+                                                        autocomplete="off"
+                                                        [(ngModel)]="usuario.login"
+                                                        class="form-control py-4"
+                                                        placeholder="Digite seu login" *ngIf="!cadastrando"/>
+                                                    <mat-error *ngIf="form.controls.login.errors && !cadastrando">
+                                                        Please enter a valid email address
+                                                    </mat-error>
+                                                    <div *ngIf="form.controls.login.errors && !cadastrando">
+                                                        <div *ngIf="form.controls.login.errors.required">
+                                                            <pre class="small mb-1 text-danger"> Login é obrigatório</pre>
+                                                        </div>
+                                                     </div>-->
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="small mb-1">Senha</label>
+                                            <input type="password" name="senha"
+                                                [(ngModel)]="usuario.senha"
+                                                class="form-control py-4"
+                                                placeholder="Digite sua senha" />
+                                        </div>
+                                        <div class="center">
+                                            <!--[disabled]="form.valid"-->
+                                            <button type="submit" 
+                                                mat-raised-button class="center" color="primary">
+                                                Enviar
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="card-body">
+                                    <button class="btn btn-outline-danger btn-lg btn-block" color="primary" (click)="signInWithGoogle()">
+                                        <i class="fab fa-google"></i>
+                                        <span style="font-size: 13px;"> Entrar com Google</span>
+                                    </button>
+                                    <!--<button class="btn btn-outline-primary btn-lg btn-block" (click)="signInWithFB()">
+                                        <i class="fab fa-facebook"></i>
+                                        <span style="font-size: 13px;"> Entrar com Facebook</span>
+                                    </button>-->
+                                </div>
+                                <div class="card-footer text-center" *ngIf="!cadastrando">
+                                    <div>
+                                        <a href="#" (click)="prepararCadastro($event)">
+                                           Cadastrar-se no site
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-7" *ngIf="cadastrando">
+                            <div class="class shadow-lg border-0 rounded-lg mt-1">
+                                <div class="card-header">
+                                    <h3 class="text-center font-weigth-ligth my-4">
+                                        Formulário de cadastro
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="alert alert-success" *ngIf="mensagemSucesso">
+                                    {{ mensagemSucesso }}
+                                    </div>
+                                    <div class="alert alert-danger" *ngFor="let erro of errors">
+                                        {{ erro }}
+                                    </div>
+                                    <div class="alert alert-danger" *ngIf="!confirmPass">
+                                        As senhas informadas não conferem.
+                                    </div>
+                                    <form #loginForm="ngForm" (submit)="onSubmit()">
+                                        <div class="form-row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="small mb-1">E-mail</label>
+                                                    <span class="small mb-1 text-danger"> (Este será o seu login)</span>
+                                                    <input type="text" name="email"
+                                                        [(ngModel)]="usuario.email"
+                                                        class="form-control py-4"
+                                                        placeholder="Digite seu e-mail"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="small mb-1">Login</label>
+                                                    <input type="text" name="login"
+                                                        [(ngModel)]="usuario.email"
+                                                        class="form-control py-4"
+                                                        readonly="true"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="small mb-1">Nome</label>
+                                            <input type="text" name="nome"
+                                                [(ngModel)]="usuario.nome"
+                                                class="form-control py-4"
+                                                placeholder="Digite seu nome"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Igreja (digite o nome para pesquisar):</label>
+                                            <ng-autocomplete [data]="igrejas"
+                                                (selected)="igrejaSelecionada($event)"
+                                                [searchKeyword]="keyword"
+                                                [minQueryLength]=4
+                                                (inputChanged)="onChangeSearch($event)"
+                                                [itemTemplate]="itemTemplate"
+                                                placeholder="Igreja (Obrigatória)">
+                                            </ng-autocomplete> 
+                                            <ng-template #itemTemplate let-item>
+                                                <a [innerHTML]="item.nome"></a>
+                                            </ng-template>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="small mb-1">Senha</label>
+                                            <input type="password" name="senha"
+                                                [(ngModel)]="usuario.senha"
+                                                class="form-control py-4"
+                                                placeholder="Digite sua senha" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" name="senha2"
+                                                class="form-control py-4"
+                                                placeholder="Confirme sua senha"
+                                                (blur)="checkSenhas($event)"/>
+                                        </div>
+                                        <div class="center">
+                                            <button type="button" mat-raised-button color="primary" style="margin: 0 10px;"
+                                                    (click)="cadastrar()">
+                                                    Cadastrar
+                                            </button>
+                                            <button type="button" (click)="cancelarCadastro()"
+                                                    mat-raised-button ml-1 color="warn">
+                                                Cancelar
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+    </div>
+</div>

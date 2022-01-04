@@ -1,0 +1,152 @@
+<ol class="breadcrumb mb-4" style="align-content: center;">
+    <span class="material-icons" font-size="50px">supervised_user_circle</span>
+    <li style="font-weight: bold;">&nbsp;&nbsp;{{ descricaoPerfil }}</li>
+</ol>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-success" role="alert" *ngIf="mensagemSucesso">
+                {{ mensagemSucesso }}
+            </div>
+            <div class="alert alert-danger" role="alert" *ngFor="let mensagemErro">
+                {{ mensagemErro }}
+             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="button-container">
+            <button *ngIf="perfil != 0" mat-mini-fab color="primary" (click)="novoUsuario()" title="Adicionar Usuário" style="border:none;">
+                <i class="material-icons" style="font-size: 35px; color:darkblue;">person_add</i>
+            </button>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-condensed table-hover table-responsive">
+                <thead class="thead-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Login</th>
+                        <th>Nome</th>
+                        <th>CPF</th>
+                        <th>E-mail</th>
+                        <th>Data Cadastro</th>
+                        <th>Data Inativação</th>
+                        <th>Igreja</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let usuario of usuarios">
+                        <td>{{ usuario.id }}</td>
+                        <td>{{ usuario.login }}</td>
+                        <td>{{ usuario.nome }}</td>
+                        <td>{{ usuario.cpf }}</td>
+                        <td>{{ usuario.email }}</td>
+                        <td>{{ usuario.dataCadastro }}</td>
+                        <td>{{ usuario.dataInativacao }}</td>
+                        <td *ngIf="usuario.igrejas.length > 0; else semIgreja">
+                            {{ usuario.igrejas[0].nome }}
+                        </td>
+                        <ng-template #semIgreja>
+                           <i> [Sem vínculo] </i>
+                        </ng-template>
+                        <td>
+                            <!--<button class="btn btn-primary" routerLink="/usuarios/form/{{ usuario.id }}">
+                                <i class="fa fa-edit"></i>
+                            </button>-->
+                            <div class="button-container">
+                                <button mat-mini-fab color="warn" (click)="preparar(usuario)" data-target="#modalConversao"
+                                    data-toggle="modal" title="Converter em Membro"
+                                    *ngIf="usuario.perfil == 0" style="border:none;">
+                                    <i class="material-icons" style="font-size: 25px; color: darkblue;">how_to_reg</i>
+                                </button>&nbsp;
+                                <button mat-mini-fab color="warn" routerLink="/usuarios/form/{{ usuario.id }}/{{ usuario.perfil }}"
+                                    title="Editar" style="border:none;">
+                                    <i class="material-icons" style="font-size: 25px; color: darkblue;">edit</i>
+                                </button>&nbsp;
+                                <button mat-mini-fab color="warn" (click)="preparar(usuario)" title="Excluir"
+                                        data-toggle="modal" data-target="#modalExclusao" style="border:none;">
+                                    <i class="material-icons" style="font-size: 25px; color: orangered;">delete</i>
+                                </button>
+                            </div>
+                            <!--<button class="btn btn-danger" (click)="preparar(usuario)"
+                                data-toggle="modal" data-target="#modalInativacao">
+                                <i class="fa fa-trash"></i>
+                            </button>-->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br/><br/>
+            <span class="font_clamp center" style="font-size: 8pt;">{{ totalElementos }} resultado(s) encontrado(s)</span>
+            <br/>
+            <div class="d-flex justify-content-center">
+                <!--<select (change)="handlePageSizeChange($event)" style="font-size: 8pt;">
+                    <option *ngFor="let size of pageSizeOptions" [ngValue]="size">
+                        {{ size }}
+                    </option>
+                </select>-->
+                <ul class="pagination">
+                    <li>
+                        <a (click)="handlePageChange(0)" *ngIf="paginas && paginas.length > 1">«</a>
+                        <a *ngIf="paginas && paginas.length == 1">«</a>
+                    </li>
+                    <li *ngFor="let page of paginas">
+                        <a class="active" *ngIf="page == (paginaAtual+1)">{{ page }}</a>
+                        <a (click)="handlePageChange(page-1)" *ngIf="page != (paginaAtual+1)">{{ page }}</a>
+                    </li>
+                    <li>
+                        <a (click)="handlePageChange(ultimaPagina-1)" *ngIf="paginas && paginas.length > (paginaAtual+1)">»</a>
+                        <a *ngIf="paginas && paginas.length == (paginaAtual+1)">»</a>
+                    </li>
+                </ul>
+            </div>
+            <!--<div class="d-flex justify-content-center">
+                <pagination-controls
+                  responsive="true" 
+                  previousLabel="Prev" 
+                  nextLabel="Next" 
+                  (pageChange)="handlePageSizeChange($event)">
+                </pagination-controls>
+            </div>-->
+        </div>
+    </div>
+</div>
+
+<div id="modalExclusao" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Confirmação</h4>
+            </div>
+           <div class="modal-body" *ngIf="usuarioSelecionado">
+               Confirma a exclusão do usuário {{ usuarioSelecionado.nome }}?
+           </div>
+           <div class="modal-footer">
+               <button class="btn btn-success" (click)="deletarUsuario()" data-dismiss="modal">Confirmar</button>
+               <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+           </div>
+        </div>
+    </div>
+
+</div>
+
+<div id="modalConversao" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Confirmação</h4>
+            </div>
+           <div class="modal-body" *ngIf="usuarioSelecionado">
+               Confirma a conversão do usuário {{ usuarioSelecionado.nome }} em membro da igreja?
+           </div>
+           <div class="modal-footer">
+               <button class="btn btn-success" (click)="converterEmMembro()" data-dismiss="modal">Confirmar</button>
+               <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+           </div>
+        </div>
+    </div>
+
+</div>

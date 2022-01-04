@@ -1,0 +1,100 @@
+<ol class="breadcrumb mb-4" style="align-content: center;">
+    <span class="material-icons" font-size="50px">payments</span>
+    <li style="font-weight: bold;">&nbsp;&nbsp;Despesas</li>
+</ol>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-success" role="alert" *ngIf="mensagemSucesso">
+                {{ mensagemSucesso }}
+            </div>
+            <div class="alert alert-danger" role="alert" *ngFor="let mensagemErro">
+                {{ mensagemErro }}
+             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="button-container">
+            <button mat-mini-fab color="primary" (click)="novaDespesa()" title="Adicionar Despesa" style="border:none;">
+                <i class="material-icons" style="font-size: 35px; color:darkblue;">add_circle</i>
+            </button>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-condensed table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Tipo Despesa</th>
+                        <th>Valor</th>
+                        <th>Data Despesa</th>
+                        <th>Igreja</th>
+                        <th>Data Cadastro</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let despesa of despesas">
+                        <td>{{ despesa.id }}</td>
+                        <td>{{ despesa.tipoDespesa.nome }}</td>
+                        <td>{{ despesa.valor | currency : 'BRL' }}</td>
+                        <td>{{ despesa.dataDespesa }}</td>
+                        <td>{{ despesa.igreja.nome }}</td>
+                        <td>{{ despesa.dataCadastro }}</td>
+                        <td>
+                            <div class="button-container">
+                                <button mat-mini-fab color="warn" routerLink="/despesas/form/{{ despesa.id }}" title="Editar"
+                                    style="border:none;">
+                                    <i class="material-icons" style="font-size: 25px; color: darkblue;">edit</i>
+                                </button>&nbsp;
+                                <button mat-mini-fab color="warn" (click)="preparar(despesa)" title="Excluir"
+                                        data-toggle="modal" data-target="#modalExclusaoDespesa" style="border:none;">
+                                    <i class="material-icons" style="font-size: 25px; color: orangered;">delete</i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br/><br/>
+            <span class="font_clamp center" style="font-size: 8pt;">{{ totalElementos }} resultado(s) encontrado(s)</span>
+            <br/>
+            <div class="d-flex justify-content-center">
+                <ul class="pagination">
+                    <li>
+                        <a (click)="handlePageChange(0)" *ngIf="paginas && paginas.length > 1">«</a>
+                        <a *ngIf="paginas && paginas.length == 1">«</a>
+                    </li>
+                    <li *ngFor="let page of paginas">
+                        <a class="active" *ngIf="page == (paginaAtual+1)">{{ page }}</a>
+                        <a (click)="handlePageChange(page-1)" *ngIf="page != (paginaAtual+1)">{{ page }}</a>
+                    </li>
+                    <li>
+                        <a (click)="handlePageChange(ultimaPagina-1)" *ngIf="paginas && paginas.length > (paginaAtual+1)">»</a>
+                        <a *ngIf="paginas && paginas.length == (paginaAtual+1)">»</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalExclusaoDespesa" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Confirmação</h4>
+            </div>
+           <div class="modal-body" *ngIf="despesaSelecionada">
+               Confirma a exclusão da Despesa de {{ despesaSelecionada.valor | currency : 'BRL' }}?
+           </div>
+           <div class="modal-footer">
+               <button class="btn btn-success" (click)="deletarDespesa()" data-dismiss="modal">Confirmar</button>
+               <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+           </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,123 @@
+<ol class="breadcrumb mb-4">
+    <span *ngIf="!contribuicao.id" class="material-icons" font-size="50px">control_point</span>
+    <span *ngIf="contribuicao.id" class="material-icons" font-size="50px">edit</span>
+    <li class="breadcrumb-item active" style="font-weight: bold;">
+        &nbsp;&nbsp;
+        {{ contribuicao.id ? 'Edição de Contribuição' : 'Cadastro de Contribuição '}}
+    </li>
+</ol>
+<div class="container">
+    <form (ngSubmit)="onSubmit()">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success" role="alert" *ngIf="success == true">
+                {{ acaoCadastrar ? 'Contribuição cadastrada com sucesso!' : 'Contribuição atualizada com sucesso!' }}
+                </div>
+                <div class="alert alert-danger" role="alert" *ngFor="let erro of errors">
+                    {{ erro }}
+                 </div>
+            </div>
+        </div>
+
+        <div class="row center">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label class="form-label">Data da Contribuição:</label>
+                    <div class="input-group">
+                        <input class="form-control" placeholder="dd/mm/yyyy"
+                               name="dataContribuicao" [(ngModel)]="contribuicao.dataContribuicao"
+                               placeholder="Data da Contribuição (Obrigatório)">
+                               <input class="form-control" placeholder="dd/mm/yyyy"
+                                    [(ngModel)]="dataContribuicaoTemp"
+                                    name="dataContribuicaoTemp"
+                                    ngbDatepicker #dataContribuicao="ngbDatepicker"
+                                    (dateSelect)="converterData($event)"
+                                    style="display: none;">
+                               <div class="input-group-append">
+                                   <button class="material-icons button_no_focus" (click)="dataContribuicao.toggle()" type="button" style="border:none;">calendar_month</button>
+                               </div>
+                      </div>
+                </div>
+            </div>
+
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label class="form-label">Membro (digite o nome para pesquisar):</label>
+                    <ng-autocomplete *ngIf="!editando"
+                        [data]="data"
+                        (selected)="membroSelecionado($event)"
+                        [searchKeyword]="keyword"
+                        [minQueryLength]=4
+                        (inputChanged)="onChangeSearch($event)"
+                        [itemTemplate]="itemTemplate"
+                        placeholder="Membro (Obrigatório)">
+                    </ng-autocomplete> 
+                    <ng-autocomplete *ngIf="editando"
+                        [data]="data"
+                        (selected)="membroSelecionado($event)"
+                        [searchKeyword]="keyword"
+                        [minQueryLength]=4
+                        (inputChanged)="onChangeSearch($event)"
+                        [itemTemplate]="itemTemplate"
+                        initialValue={{contribuicao.membro.nome}}>                                 
+                    </ng-autocomplete>
+
+                    <ng-template #itemTemplate let-item>
+                        <a [innerHTML]="item.nome"></a>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+        <div class="row center">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label class="form-label">Valor (R$):</label>
+                    <input type="number" class="form-control" [(ngModel)]="contribuicao.valor"
+                        name="valor" size="6" maxlength="6" step="0.01" placeholder="Valor (Obrigatório)"/>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="mt-2">
+                    <div class="form-group">
+                        <label>Tipo de Contribuição: <span style="color: red;">*</span></label><br/>
+                        <select (change)="atribuirTipoDeContribuicao($event)" id="idTiposContribuicao">
+                            <option>Escolha</option>
+                            <option *ngFor="let tipo of tiposContribuicao" [ngValue]="tipo.id" [value]="tipo.id">
+                                {{ tipo.nome }}
+                            </option>
+                        </select>
+                        <img src="/assets/loading.gif" width="48" height="48" alt="Carregando" *ngIf="isProcessandoTipos">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row center">
+            <div class="col-md-5 mt-2">
+                <div class="form-group">
+                    <label>Igreja: <span style="color: red;">* &nbsp;&nbsp;</span></label>
+                    <select (change)="atribuirIgreja($event)">
+                        <option *ngFor="let igreja of igrejas" [ngValue]="igreja.id" [value]="igreja.id">
+                            {{ igreja.nome }}
+                        </option>
+                    </select>
+                    <img src="/assets/loading.gif" width="48" height="48" alt="Carregando" *ngIf="isProcessandoIgreja">
+                </div>
+            </div>
+        </div>
+        <div class="row center mt-3">
+            <div class="col-md-1">
+                <div class="button-container">
+                    <button type="submit" mat-mini-fab color="warn" *ngIf="!contribuicao.id" title="Salvar" style="border:none;">
+                        <i class="material-icons" style="font-size: 30px; color: darkblue;">save</i>
+                    </button>
+                    <button type="submit" mat-mini-fab color="warn" *ngIf="contribuicao.id" title="Atualizar" style="border:none;">
+                        <i class="material-icons" style="font-size: 30px; color: teal;">update</i>
+                    </button>&nbsp;&nbsp;
+                    <button mat-mini-fab color="warn" (click)="voltarParaListagem()" title="Cancelar" style="border:none;">
+                        <i class="material-icons" style="font-size: 30px; color: indianred;">cancel</i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

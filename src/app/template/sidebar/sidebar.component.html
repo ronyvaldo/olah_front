@@ -1,0 +1,74 @@
+<div id="layoutSidenav_nav">
+    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+        <div class="sb-sidenav-menu">
+            <div class="nav">
+                <br/>
+                <div style="font-family: sans-serif; font-size: 14px; margin-left: 3rem;">
+                    {{ infoCongregacao }}
+                </div>
+                <div class="sb-sidenav-menu-heading"></div>
+                <a class="nav-link" routerLink="/home">
+                    <span class="material-icons" font-size="50px">home</span>
+                    &nbsp;Home
+                </a>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse"
+                    data-target="#collapseUsuarios" aria-expanded="false"
+                    aria-controls="collapseUsuarios" *ngIf="perfilUsuarioLogado == 2 || perfilUsuarioLogado == 3">
+                    <span class="material-icons" font-size="50px">supervised_user_circle</span>
+                    &nbsp;Usuários
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseUsuarios" aria-labelledby="headingOne"
+                    data-parent="#sidenavAccordion" *ngIf="perfilUsuarioLogado == 2 || perfilUsuarioLogado == 3">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" routerLink="/usuarios/list/0">Autocadastro</a>
+                        <a class="nav-link" routerLink="/usuarios/list/1">Membros</a>
+                        <a class="nav-link" routerLink="/usuarios/list/2">Administradores</a>
+                    </nav>
+                </div>
+                <a class="nav-link" routerLink="">
+                    <span class="material-icons" font-size="50px">event</span>
+                    &nbsp;Agenda
+                </a>
+                <a class="nav-link" routerLink="">
+                    <span class="material-icons" font-size="50px">event_note</span>
+                    &nbsp;Eventos
+                </a>
+                <a class="nav-link" routerLink="" *ngIf="perfilUsuarioLogado == 2 || perfilUsuarioLogado == 3">
+                    <span class="material-icons" font-size="50px">house</span>
+                    &nbsp;Igrejas
+                </a>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse"
+                    data-target="#collapseLancamentos" aria-expanded="false"
+                    aria-controls="collapseLancamentos" *ngIf="perfilUsuarioLogado == 2 || perfilUsuarioLogado == 3">
+                    <span class="material-icons" font-size="50px">request_quote</span>
+                    &nbsp;Lançamentos
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseLancamentos" aria-labelledby="headingOne"
+                    data-parent="#sidenavAccordion" *ngIf="perfilUsuarioLogado == 2 || perfilUsuarioLogado == 3">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" routerLink="/contribuicoes">Contribuições</a>
+                        <a class="nav-link" routerLink="/despesas">Despesas</a>
+                    </nav>
+                </div>
+                <a class="nav-link" routerLink="" *ngIf="perfilUsuarioLogado == 2 || perfilUsuarioLogado == 3">
+                    <span class="material-icons" font-size="50px">summarize</span>
+                    &nbsp;Relatórios
+                </a>
+
+                <div class="sb-sidenav-menu-heading">Logout</div>
+                <a class="nav-link collapsed" (click)="logout()" href=""
+                    data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                    <span class="material-icons" font-size="50px">logout</span>
+                    &nbsp;Sair
+                </a>
+            </div>
+            <br/><br/>
+            <div class="sb-sidenav-footer">
+                <div class="small">Usuário Logado:</div>
+                {{ loginUsuarioLogado }}
+            </div>
+        </div>
+    </nav>
+</div>
