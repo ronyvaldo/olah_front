@@ -10,7 +10,7 @@ const app = express();
 
 console.log("==================");
 
-fs.readdir(testFolder, (err, files) => {
+fs.readdir(__dirname, (err, files) => {
     files.forEach(file => {
       console.log(file);
     });
