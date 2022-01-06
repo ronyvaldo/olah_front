@@ -10,9 +10,17 @@ const app = express();
 
 console.log("==================");
 
+const local = __dirname+"/src";
+
 fs.readdir(__dirname, (err, files) => {
     files.forEach(file => {
       console.log(file);
+    });
+  });
+
+  fs.readdir(local, (err, files) => {
+    files.forEach(file => {
+      console.log("local: "+file);
     });
   });
 
