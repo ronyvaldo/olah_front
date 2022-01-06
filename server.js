@@ -11,6 +11,7 @@ const app = express();
 console.log("==================");
 
 const local = __dirname+"/src";
+const dist = __dirname+"/dist";
 
 fs.readdir(__dirname, (err, files) => {
     files.forEach(file => {
@@ -21,6 +22,12 @@ fs.readdir(__dirname, (err, files) => {
   fs.readdir(local, (err, files) => {
     files.forEach(file => {
       console.log("local: "+file);
+    });
+  });
+
+  fs.readdir(dist, (err, files) => {
+    files.forEach(file => {
+      console.log("dist: "+file);
     });
   });
 
