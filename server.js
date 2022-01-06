@@ -5,8 +5,10 @@ const fs = require('fs');
 
 const app = express();
 
+const olah_dir = __dirname+"/dist/olah-app";
+
 // Serve only the static files form the dist directory
-//app.use(express.static(__dirname));
+app.use(express.static(olah_dir));
 
 console.log("==================");
 
@@ -30,6 +32,13 @@ fs.readdir(__dirname, (err, files) => {
       console.log("dist: "+file);
     });
   });
+
+  fs.readdir(olah_dir, (err, files) => {
+    files.forEach(file => {
+      console.log("olah_dir: "+file);
+    });
+  });
+
 
   console.log("==================");
 
