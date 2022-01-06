@@ -27,7 +27,7 @@ fs.readdir(__dirname, (err, files) => {
   console.log("==================");
 
 app.get('/', (req, res) =>
-    res.sendFile(path.join(__dirname, '/index.html'))
+    res.sendFile(path.join(local, '/index.html'))
 );
 
 // Start the app by listening on the default Heroku port
