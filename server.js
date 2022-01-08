@@ -6,13 +6,19 @@ const fs = require('fs');
 const app = express();
 
 const olah_dir = __dirname+"/dist/olah-app";
+const local = __dirname+"/src";
 
-// Serve only the static files form the dist directory
 app.use(express.static(olah_dir));
 
-console.log("==================");
+app.get('/', (req, res) =>
+    res.sendFile(path.join(local, '/index.html'))
+);
 
-const local = __dirname+"/src";
+app.listen(process.env.PORT || 4200);
+
+
+/*console.log("==================");
+
 const dist = __dirname+"/dist";
 
 fs.readdir(__dirname, (err, files) => {
@@ -40,11 +46,4 @@ fs.readdir(__dirname, (err, files) => {
   });
 
 
-  console.log("==================");
-
-app.get('/', (req, res) =>
-    res.sendFile(path.join(local, '/index.html'))
-);
-
-// Start the app by listening on the default Heroku port
-app.listen(process.env.PORT || 4200);
+  console.log("==================");*/
