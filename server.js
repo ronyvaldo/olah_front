@@ -8,10 +8,10 @@ const app = express();
 const olah_dir = __dirname+"/dist/olah-app";
 const local = __dirname+"/src";
 
-app.use(express.static(__dirname));
+app.use(express.static(olah_dir));
 
-app.get('/', (req, res) =>
-    res.sendFile(path.join(local, '/index.html'))
+app.get('*', (req, res) =>
+    res.sendFile(path.join(local+'/index.html'))
 );
 
 app.listen(process.env.PORT || 4200);
