@@ -8,7 +8,7 @@ const app = express();
 const olah_dir = __dirname+"/dist/olah-app";
 const local = __dirname+"/src";
 
-app.use(express.static(local));
+app.use(express.static(__dirname));
 
 app.get('/', (req, res) =>
     res.sendFile(path.join(local, '/index.html'))
