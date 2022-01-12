@@ -11,9 +11,12 @@ const local = __dirname+"/src";
 app.use(express.static(olah_dir));
 
 app.get('/', (req, res) =>
-    res.sendFile(path.join(local, '/index.html')),
-    res.render('index', {})
+    res.sendFile(path.join(local, '/index.html'))
 );
+
+app.get('*', (req, res) => {
+  res.redirect('/')
+})
 
 app.listen(process.env.PORT || 4200);
 
