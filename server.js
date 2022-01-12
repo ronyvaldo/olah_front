@@ -10,13 +10,9 @@ const local = __dirname+"/src";
 
 app.use(express.static(olah_dir));
 
-app.get('/', (req, res) =>
+app.get('*', (req, res) =>
     res.sendFile(path.join(local, '/index.html'))
 );
-
-app.use('*', (req, res, next) => {
-  res.sendFile(path.join(__dirname, 'angular build file path'));
-});
 
 app.listen(process.env.PORT || 4200);
 
