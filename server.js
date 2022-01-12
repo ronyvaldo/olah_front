@@ -15,7 +15,7 @@ app.get('/', (req, res) =>
 );
 
 app.use('*', (req, res, next) => {
-  res.sendFile(path.join(local, 'angular build file path'));
+  res.sendFile(path.join(__dirname, 'angular build file path'));
 });
 
 app.listen(process.env.PORT || 4200);
