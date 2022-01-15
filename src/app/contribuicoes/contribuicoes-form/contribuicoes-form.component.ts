@@ -106,7 +106,7 @@ export class ContribuicoesFormComponent implements OnInit {
                   this.editando = true;
                   setTimeout(() => {
                     (document.getElementById('idTiposContribuicao') as HTMLInputElement).value = this.contribuicao.tipoContribuicao.id.toString();
-                  }, 100);
+                  }, 150);
                 },
                 errorResponse => this.contribuicao = new Contribuicao()
               )

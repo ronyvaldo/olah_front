@@ -101,7 +101,7 @@ export class DespesasFormComponent implements OnInit {
                   this.despesa = response;
                   setTimeout(() => {
                     (document.getElementById('idTiposDespesa') as HTMLInputElement).value = this.despesa.tipoDespesa.id.toString()
-                  }, 100);
+                  }, 150);
                 },
                 errorResponse => this.despesa = new Despesa()
               )
