@@ -44,7 +44,7 @@ export class GraficosComponent implements OnInit {
               label: "",
               backgroundColor: ["#03B149", "#F23656"],
               barPercentage: .3,
-              data: [this.lancamentos.totalContribuicoes, this.lancamentos.totalDespesas]
+              data: [this.lancamentos.totalContribuicoes.toFixed(2), this.lancamentos.totalDespesas.toFixed(2)]
             }
           ]
         },

@@ -85,6 +85,9 @@ export class UsuariosFormComponent implements OnInit {
 
   onSubmit() {
     if (this.id && this.id > 0) {
+      if (this.usuario.igrejas.length == 0) {
+        this.definirIgrejaUsuarioCadastro();
+      }
       this.service
       .atualizar(this.usuario)
       .subscribe(response => {
