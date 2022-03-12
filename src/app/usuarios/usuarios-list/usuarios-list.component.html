@@ -14,15 +14,15 @@
         </div>
     </div>
     <div class="row">
-        <div class="button-container">
-            <button *ngIf="perfil != 0" mat-mini-fab color="primary" (click)="novoUsuario()" title="Adicionar Usuário" style="border:none;">
-                <i class="material-icons" style="font-size: 35px; color:darkblue;">person_add</i>
-            </button>
-            <button *ngIf="perfil == 1" mat-mini-fab color="primary" (click)="gerarRelatorioDeMembrosDaIgreja()"
-                title="Gerar Relatório de Membros" style="float: rigth" type="button" class="btn btn-success btn-block btn-sm">
+        <button *ngIf="perfil != 0" mat-mini-fab color="primary" (click)="novoUsuario()" title="Adicionar Usuário" style="border:none;">
+            <i class="material-icons" style="font-size: 35px; color:darkblue;">person_add</i>
+        </button>
+        <p style="width: 50%;"></p>
+        <button *ngIf="perfil == 1" mat-mini-fab color="primary" (click)="gerarRelatorioDeMembrosDaIgreja()"
+            title="Gerar Relatório de Membros" style="float: rigth; height: fit-content; width: fit-content;" type="button" class="btn btn-info btn-block btn-sm">
+            <i class="material-icons mb-1 overflow-x: auto;" style="color: white; float: right;">file_download</i>
                 Exportar em Excel
-            </button>
-        </div>
+        </button>
     </div>
     <br />
     <div class="row">

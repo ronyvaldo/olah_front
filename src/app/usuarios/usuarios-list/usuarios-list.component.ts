@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { FileSaverService } from 'ngx-filesaver';
 import { Observable } from 'rxjs';
 import { Igreja } from 'src/app/igrejas/igreja';
 import { IgrejasService } from 'src/app/services/igrejas.service';
@@ -33,7 +34,8 @@ export class UsuariosListComponent implements OnInit {
 
   constructor(private service : UsuariosService,
     private igrejasService: IgrejasService,
-    private reportsService : ReportsService, 
+    private reportsService : ReportsService,
+    private fileSaver : FileSaverService,
     private router : Router,
     private activatedRoute : ActivatedRoute) {}
 
@@ -175,7 +177,14 @@ export class UsuariosListComponent implements OnInit {
   definirIgrejaEGerar() {
     if (this.igrejas && this.igrejas.length == 1) this.idIgrejaSelecionada = this.igrejas[0].id;
     if (this.idIgrejaSelecionada) {
-      this.reportsService.gerarRelatorioDeMembrosDaIgreja(this.idIgrejaSelecionada);
+      this.reportsService.gerarRelatorioDeMembrosDaIgreja(this.idIgrejaSelecionada)
+        .subscribe(res => {
+          let blob = new Blob([res.body], { type: res.headers.get('content-type') + '; charset=utf-8'});
+          let headers = res.headers ? res.headers : new Map();
+          let fileName = headers.get('content-disposition').split("filename=")[1];
+          this.fileSaver.save(blob,fileName);
+        }
+        );
     }
   }
 

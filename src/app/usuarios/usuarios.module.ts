@@ -6,6 +6,7 @@ import { UsuariosRoutingModule } from './usuarios-routing.module';
 import { UsuariosFormComponent } from './usuarios-form/usuarios-form.component';
 import { UsuariosListComponent } from './usuarios-list/usuarios-list.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FileSaverModule } from 'ngx-filesaver';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     CommonModule,
     UsuariosRoutingModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    FileSaverModule
   ], exports: [
     UsuariosFormComponent,
     UsuariosListComponent

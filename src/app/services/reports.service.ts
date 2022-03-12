@@ -12,8 +12,9 @@ export class ReportsService {
 
     constructor( private http: HttpClient ) { }
 
-    gerarRelatorioDeMembrosDaIgreja(idIgreja : number) : Observable<Blob> {
+    gerarRelatorioDeMembrosDaIgreja(idIgreja : number) : Observable<HttpResponse<any>> {
         return this.http.get(this.apiURL + `/membros=${idIgreja}`, {
+            observe: 'response',
             responseType: 'blob'
           });
     }
