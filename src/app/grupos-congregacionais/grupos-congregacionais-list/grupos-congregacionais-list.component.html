@@ -1,0 +1,75 @@
+<ol class="breadcrumb mb-4" style="align-content: center;">
+    <span class="material-icons" font-size="50px">church</span>
+    <li style="font-weight: bold;">&nbsp;&nbsp;Grupos Congregacionais</li>
+</ol>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-success" role="alert" *ngIf="mensagemSucesso">
+                {{ mensagemSucesso }}
+            </div>
+            <div class="alert alert-danger" role="alert" *ngFor="let mensagemErro">
+                {{ mensagemErro }}
+             </div>
+        </div>
+    </div>
+    <div class="row col-md-5">
+        <div class="button-container">
+            <button mat-mini-fab color="primary" 
+                title="Adicionar Igreja"
+                style="border:none;"
+                (click)="novoGrupo()">
+                <i class="material-icons" style="font-size: 35px; color:darkblue;">add_circle</i>
+            </button>
+        </div>
+    </div>
+    <br />
+    <div class="row center">
+        <div>
+            <table class="table table-condensed table-hover table-responsive">
+                <thead class="thead-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Data Cadastro</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let grupoCongregacional of gruposCongregacionais">
+                        <td>{{ grupoCongregacional.id }}</td>
+                        <td>{{ grupoCongregacional.nome }}</td>
+                        <td>{{ grupoCongregacional.dataCadastro }}</td>
+                        <td>
+                            <div class="button-container">
+                                <button mat-mini-fab color="warn" routerLink="/gruposCongregacionais/form/{{ grupoCongregacional.id }}"
+                                    title="Editar" style="border:none;">
+                                    <i class="material-icons" style="font-size: 25px; color: darkblue;">edit</i>
+                                </button>&nbsp;
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br/><br/>
+            <span class="font_clamp center" style="font-size: 8pt;">{{ totalElementos }} resultado(s) encontrado(s)</span>
+            <br/>
+            <div class="d-flex justify-content-center">
+                <ul class="pagination">
+                    <li>
+                        <a (click)="handlePageChange(0)" *ngIf="paginas && paginas.length > 1">«</a>
+                        <a *ngIf="paginas && paginas.length == 1">«</a>
+                    </li>
+                    <li *ngFor="let page of paginas">
+                        <a class="active" *ngIf="page == (paginaAtual+1)">{{ page }}</a>
+                        <a (click)="handlePageChange(page-1)" *ngIf="page != (paginaAtual+1)">{{ page }}</a>
+                    </li>
+                    <li>
+                        <a (click)="handlePageChange(ultimaPagina-1)" *ngIf="paginas && paginas.length > (paginaAtual+1)">»</a>
+                        <a *ngIf="paginas && paginas.length == (paginaAtual+1)">»</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

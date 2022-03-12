@@ -23,15 +23,15 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
 import { HomeComponent } from './home/home.component';
 import { UsuariosModule } from './usuarios/usuarios.module';
-import { UsuariosService } from './usuarios.service';
+import { UsuariosService } from './services/usuarios.service';
 import { LoginComponent } from './login/login.component';
 import { LayoutComponent } from './layout/layout.component';
 import { TokenInterceptor } from './token.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ContribuicoesService } from './contribuicoes.service';
+import { ContribuicoesService } from './services/contribuicoes.service';
 import { ContribuicoesModule } from './contribuicoes/contribuicoes.module';
 import { DespesasModule } from './despesas/despesas.module';
-import { DespesasService } from './despesas.service';
+import { DespesasService } from './services/despesas.service';
 
 //Login Social
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
@@ -39,8 +39,18 @@ import {
   GoogleLoginProvider,
   FacebookLoginProvider
 } from 'angularx-social-login';
-import { NgbDateStructAdapter } from '@ng-bootstrap/ng-bootstrap/datepicker/adapters/ngb-date-adapter';
+
 import { NgxMaskModule } from 'ngx-mask';
+import { ProfileComponent } from './profile/profile.component';
+import { IgrejasModule } from './igrejas/igrejas.module';
+import { EventosModule } from './eventos/eventos.module';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { CadastrarEventoModule } from './eventos/cadastrar-evento/cadastrar-evento.module';
+import { CalendarioModule } from './calendario/calendario.module';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { GruposCongregacionaisModule } from './grupos-congregacionais/grupos-congregacionais.module';
+import { TipoContribuicaoModule } from './contribuicoes/tipo-contribuicao/tipo-contribuicao.module';
+import { RelatoriosModule } from './relatorios/relatorios.module';
 
 
 registerLocaleData(ptBr);
@@ -50,7 +60,8 @@ registerLocaleData(ptBr);
     AppComponent,
     HomeComponent,
     LoginComponent,
-    LayoutComponent
+    LayoutComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -62,6 +73,13 @@ registerLocaleData(ptBr);
     ContribuicoesModule,
     DespesasModule,
     GraficosModule,
+    IgrejasModule,
+    EventosModule,
+    CadastrarEventoModule,
+    CalendarioModule,
+    GruposCongregacionaisModule,
+    TipoContribuicaoModule,
+    RelatoriosModule,
     ReactiveFormsModule,
     MatButtonModule,
     MatInputModule,
@@ -73,7 +91,9 @@ registerLocaleData(ptBr);
     MatTableModule,
     NgChartsModule,
     AutocompleteLibModule,
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    NgxPaginationModule,
+    FullCalendarModule
   ],
   providers: [
     UsuariosService,

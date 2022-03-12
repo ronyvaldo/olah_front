@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { ContribuicoesService } from 'src/app/contribuicoes.service';
+import { ContribuicoesService } from 'src/app/services/contribuicoes.service';
 import { Contribuicao } from '../contribuicao';
 import { PaginaContribuicao } from '../paginaContribuicao';
 

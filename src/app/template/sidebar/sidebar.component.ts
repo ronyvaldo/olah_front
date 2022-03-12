@@ -1,7 +1,7 @@
 import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { UsuariosService } from 'src/app/usuarios.service';
+import { UsuariosService } from 'src/app/services/usuarios.service';
 import { Usuario } from 'src/app/usuarios/usuario';
 
 @Component({

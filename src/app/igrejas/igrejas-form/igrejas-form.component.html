@@ -1,0 +1,60 @@
+<ol class="breadcrumb mb-4">
+    <span *ngIf="!igreja.id" class="material-icons" font-size="50px">control_point</span>
+    <span *ngIf="igreja.id" class="material-icons" font-size="50px">edit</span>
+    <li class="breadcrumb-item active" style="font-weight: bold;">
+        &nbsp;&nbsp;
+        {{ igreja.id ? 'Edição de Igreja' : 'Cadastro de Igreja '}}
+    </li>
+</ol>
+<div class="container">
+    <form (ngSubmit)="onSubmit()">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success" role="alert" *ngIf="success == true">
+                {{ acaoCadastrar ? 'Igreja cadastrada com sucesso!' : 'Igreja atualizada com sucesso!' }}
+                </div>
+                <div class="alert alert-danger" role="alert" *ngFor="let erro of errors">
+                    {{ erro }}
+                 </div>
+            </div>
+        </div>
+
+        <div class="row center">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label class="form-label">Nome:</label>
+                    <input type="text" class="form-control" [(ngModel)]="igreja.nome"
+                        name="nome" size="50" maxlength="51" placeholder="Nome (Obrigatório)"/>
+                </div>
+            </div>
+        </div>
+        <div class="row center">
+            <div class="col-md-5 mt-4">
+                <div class="form-group">
+                    <label>Grupo Congregacional: <span style="color: red;">* &nbsp;&nbsp;</span></label>
+                    <select (change)="atribuirGrupo($event)">
+                        <option *ngFor="let grupo of grupos" [ngValue]="grupo.id" [value]="grupo.id">
+                            {{ grupo.nome }}
+                        </option>
+                    </select>
+                    <img src="/assets/loading.gif" width="48" height="48" alt="Carregando" *ngIf="isProcessandoGrupo">
+                </div>
+            </div>
+        </div>
+        <div class="row center mt-3">
+            <div class="col-md-1">
+                <div class="button-container">
+                    <button type="submit" mat-mini-fab color="warn" *ngIf="!igreja.id" title="Salvar" style="border:none;">
+                        <i class="material-icons" style="font-size: 30px; color: darkblue; border:none;">save</i>
+                    </button>
+                    <button type="submit" mat-mini-fab color="warn" *ngIf="igreja.id" title="Atualizar" style="border:none;">
+                        <i class="material-icons" style="font-size: 30px; color: teal; border:none;">update</i>
+                    </button>&nbsp;&nbsp;
+                    <button mat-mini-fab color="warn" (click)="voltarParaListagem()" title="Cancelar" style="border:none;">
+                        <i class="material-icons" style="font-size: 30px; color: indianred; border:none;">cancel</i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

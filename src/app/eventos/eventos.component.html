@@ -1,0 +1,130 @@
+<ol class="breadcrumb mb-4" style="align-content: center;">
+    <span class="material-icons" font-size="50px">event_note</span>
+    <li style="font-weight: bold;">&nbsp;&nbsp;Eventos</li>
+</ol>
+<div *ngIf="perfilAdministrativo" class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <div class="row center">
+                <div class="col-md-3 center">
+                    <div class="form-group">
+                        <table>
+                            <tr>
+                                <td>
+                                    <b>Selecione a igreja:</b>&nbsp;&nbsp;
+                                </td>
+                                <td>
+                                    <select>
+                                        <option *ngFor="let igreja of igrejas" [ngValue]="idIgrejaSelecionada" [value]="idIgrejaSelecionada">
+                                            {{ igreja.nome }}
+                                        </option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="center mt-5">
+                <button style="width: 50%; font-size: 10pt; font-weight: normal;" type="button" class="btn btn-success btn-block btn-sm"
+                        data-toggle="modal" data-target="#cadastrarEvento" (click)="idEvento=0">
+                    <fa-icon [icon]="farCalendarPlus" size="2x"></fa-icon>&nbsp;&nbsp;Adicionar Evento
+                </button>
+            </div>
+            <ng-container *ngIf="isEmpty===false">
+                <div class="table-responsive">
+                    <table class="table table-striped table-info">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Data Início</th>
+                                <th scope="col">Data Término</th>
+                                <th scope="col">Horário Início</th>
+                                <th scope="col">Horário Término</th>
+                                <th scope="col">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="select-line" *ngFor="let evento of listaEventos">
+                                <td>{{ evento.nome }}</td>
+                                <td>{{ evento.dataInicio }}</td>
+                                <td>{{ evento.dataTermino }}</td>
+                                <td>{{ evento.horarioInicio }}</td>
+                                <td>{{ evento.horarioTermino }}</td>
+                                <td>
+                                    <fa-icon [icon]="farEdit" data-toggle="modal" data-target="#cadastrarEvento" data-placement="top" title="Editar evento" (click)="idEvento = evento.id; alterarEventos()"></fa-icon>
+                                    <fa-icon [icon]="farCalendarTimes" data-toggle="modal" data-target="#modalExclusaoContribuicao" data-placement="top" title="Excluir evento" (click)="preparar(evento)"></fa-icon>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br/><br/>
+                    <span class="font_clamp center" style="font-size: 8pt;">{{ totalElementos }} resultado(s) encontrado(s)</span>
+                    <br/>
+                    <div class="d-flex justify-content-center">
+                        <ul class="pagination">
+                            <li>
+                                <a (click)="handlePageChange(0)" *ngIf="paginas && paginas.length > 1">«</a>
+                                <a *ngIf="paginas && paginas.length == 1">«</a>
+                            </li>
+                            <li *ngFor="let page of paginas">
+                                <a class="active" *ngIf="page == (paginaAtual+1)">{{ page }}</a>
+                                <a (click)="handlePageChange(page-1)" *ngIf="page != (paginaAtual+1)">{{ page }}</a>
+                            </li>
+                            <li>
+                                <a (click)="handlePageChange(ultimaPagina-1)" *ngIf="paginas && paginas.length > (paginaAtual+1)">»</a>
+                                <a *ngIf="paginas && paginas.length == (paginaAtual+1)">»</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </ng-container>
+            <app-cadastrar-evento #alterarComponent (attEventos)="listarEventos() " [idEvento]="idEvento "></app-cadastrar-evento>
+        </div>
+    </div>
+</div>
+
+
+<div id="modalExclusaoContribuicao" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Confirmação</h4>
+            </div>
+           <div class="modal-body" *ngIf="eventoSelecionado">
+               Confirma a exclusão do evento {{ eventoSelecionado.nome }}?
+           </div>
+           <div class="modal-footer">
+               <button class="btn btn-success" (click)="deletarEvento()" data-dismiss="modal">Confirmar</button>
+               <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+           </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="!perfilAdministrativo" class="row center">
+    <div class="col-xl-2 col-md-5">
+        <div class="card bg-primary text-white mb-4">
+            <div class="card-body">Encontro de Líderes</div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+               
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-2 col-md-5">
+        <div class="card bg-warning text-white mb-4">
+            <div class="card-body">Acampamento de Jovens</div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+               
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-2 col-md-5">
+        <div class="card bg-danger text-white mb-4">
+            <div class="card-body">Camping</div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+               
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+.container-fluid,
+table,
+.card {
+    margin-top: 30px;
+}
+
+tr,
+.card {
+    text-align: center;
+}
+
+.select-line:hover {
+    color: white;
+    background-color: cornflowerblue
+}
+
+button {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.paginacao {
+    float: right;
+}
+
+table fa-icon {
+    cursor: pointer;
+}
+
+table fa-icon:nth-of-type(even) {
+    margin-right: 0px;
+}
+
+.card-header fa-icon {
+    margin-right: 0px;
+    margin-left: 8px;
+}

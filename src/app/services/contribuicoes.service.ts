@@ -3,8 +3,8 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 
-import { Contribuicao } from "./contribuicoes/contribuicao";
-import { PaginaContribuicao } from "./contribuicoes/paginaContribuicao";
+import { Contribuicao } from "../contribuicoes/contribuicao";
+import { PaginaContribuicao } from "../contribuicoes/paginaContribuicao";
 
 @Injectable({
     providedIn: 'root'

@@ -7,6 +7,7 @@ import { ContribuicoesListComponent } from './contribuicoes-list/contribuicoes-l
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+import { TipoContribuicaoModule } from './tipo-contribuicao/tipo-contribuicao.module';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
     FormsModule,
     NgbModule,
     AutocompleteLibModule,
-    ContribuicoesRoutingModule
+    ContribuicoesRoutingModule,
+    TipoContribuicaoModule
   ]/*,
   providers: [
     I18n,

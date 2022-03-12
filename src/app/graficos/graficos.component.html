@@ -1,7 +1,7 @@
 <div>
     <ol class="breadcrumb mb-4" style="align-content: center;">
         <span class="material-icons" font-size="50px">area_chart</span>
-        <li style="font-weight: bold;">&nbsp;Gráficos e Indicadores</li>
+        <li style="font-weight: bold;">&nbsp;Gráficos e Indicadores ({{ mesAtual }})</li>
     </ol>
 </div>
 
@@ -18,24 +18,46 @@
     </div>
 </div>
 
+<ol class="breadcrumb mb-4" style="align-content: center;">
+    <li style="font-weight: bold;">&nbsp;Despesas x Contribuições</li>
+</ol>
 <div class="row center">
-    <div class="col-xl-5 mt-1">
+    <div class="col-xl-4 col-md-6">
         <div class="card mb-4">
-            <div class="card-header"><i class="fas fa-chart-area mr-1"></i>Lançamentos (últimos 30 dias)</div>
-            <div class="card-body"><canvas #olahCanvas width="100%"></canvas></div>
+            <div class="card-header">Totalizadores</div>
+            <div class="card-body">
+                <canvas #olahCanvas width="100%"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">Tipos de Despesa</div>
+            <div class="card-body">
+                <canvas #olahCanvas2 width="100%"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">Tipos de Contribuição</div>
+            <div class="card-body">
+                <canvas #olahCanvas3 width="100%"></canvas>
+            </div>
         </div>
     </div>
 </div>
+
 
 <ol class="breadcrumb mb-4" style="align-content: center;">
     <li style="font-weight: bold;">&nbsp;Indicadores de Membros</li>
 </ol>
 <div class="row center">
-    <div class="col-xl-2 col-md-6">
+    <div class="col-xl-3 col-md-6">
         <div class="card bg-primary text-white mb-4">
-            <div class="card-body">Total de Membros</div>
+            <div class="card-body">Total Geral de Membros</div>
             <div class="card-footer d-flex align-items-center justify-content-between">
-               <p class="center">500</p>
+               <p *ngIf="lancamentos.totalDeMembros" class="center">{{ lancamentos.totalDeMembros }}</p>
             </div>
         </div>
     </div>
@@ -43,7 +65,9 @@
         <div class="card bg-warning text-white mb-4">
             <div class="card-body">Total entregaram contribuições</div>
             <div class="card-footer d-flex align-items-center justify-content-between">
-               <p class="center">420 (nos últimos 30 dias)</p>
+               <p *ngIf="lancamentos.totalEntregaramContribuicoes" class="center">
+                   {{ lancamentos.totalEntregaramContribuicoes }} (neste mês)
+               </p>
             </div>
         </div>
     </div>

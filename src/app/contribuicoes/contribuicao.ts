@@ -1,5 +1,5 @@
 import { Igreja } from "../igrejas/igreja";
-import { TipoContribuicao } from "../tipo-contribuicao/tipoContribuicao";
+import { TipoContribuicao } from "./tipo-contribuicao/tipoContribuicao";
 import { Usuario } from "../usuarios/usuario";
 
 export class Contribuicao {

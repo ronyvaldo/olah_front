@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
-import { DespesasService } from 'src/app/despesas.service';
-import { IgrejasService } from 'src/app/igrejas.service';
+import { DespesasService } from 'src/app/services/despesas.service';
+import { IgrejasService } from 'src/app/services/igrejas.service';
 import { Igreja } from 'src/app/igrejas/igreja';
 import { TipoDespesa } from 'src/app/tipo-despesa/tipoDespesa';
-import { TiposDespesasService } from 'src/app/tiposDespesas.service';
-import { UsuariosService } from 'src/app/usuarios.service';
+import { TiposDespesasService } from 'src/app/services/tiposDespesas.service';
+import { UsuariosService } from 'src/app/services/usuarios.service';
 import { Despesa } from '../despesa';
 
 @Component({

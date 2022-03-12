@@ -1,0 +1,47 @@
+<ol class="breadcrumb mb-4">
+    <span *ngIf="!grupoCongregacional.id" class="material-icons" font-size="50px">control_point</span>
+    <span *ngIf="grupoCongregacional.id" class="material-icons" font-size="50px">edit</span>
+    <li class="breadcrumb-item active" style="font-weight: bold;">
+        &nbsp;&nbsp;
+        {{ grupoCongregacional.id ? 'Edição de Grupo Congregacional' : 'Cadastro de Grupo Congregacional '}}
+    </li>
+</ol>
+<div class="container">
+    <form (ngSubmit)="onSubmit()">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success" role="alert" *ngIf="success == true">
+                {{ acaoCadastrar ? 'Grupo Congregacional cadastrado com sucesso!' : 'Grupo Congregacional atualizado com sucesso!' }}
+                </div>
+                <div class="alert alert-danger" role="alert" *ngFor="let erro of errors">
+                    {{ erro }}
+                 </div>
+            </div>
+        </div>
+
+        <div class="row center">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label class="form-label">Nome:</label>
+                    <input type="text" class="form-control" [(ngModel)]="grupoCongregacional.nome"
+                        name="nome" size="50" maxlength="51" placeholder="Nome (Obrigatório)"/>
+                </div>
+            </div>
+        </div>
+        <div class="row center mt-3">
+            <div class="col-md-1">
+                <div class="button-container">
+                    <button type="submit" mat-mini-fab color="warn" *ngIf="!grupoCongregacional.id" title="Salvar" style="border:none;">
+                        <i class="material-icons" style="font-size: 30px; color: darkblue; border:none;">save</i>
+                    </button>
+                    <button type="submit" mat-mini-fab color="warn" *ngIf="grupoCongregacional.id" title="Atualizar" style="border:none;">
+                        <i class="material-icons" style="font-size: 30px; color: teal; border:none;">update</i>
+                    </button>&nbsp;&nbsp;
+                    <button mat-mini-fab color="warn" (click)="voltarParaListagem()" title="Cancelar" style="border:none;">
+                        <i class="material-icons" style="font-size: 30px; color: indianred; border:none;">cancel</i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

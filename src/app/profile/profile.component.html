@@ -1,0 +1,171 @@
+<div>
+    <ol class="breadcrumb mb-4" style="align-content: center;">
+        <span class="material-icons" style="color: midnightblue;">perm_identity</span>
+        <li style="font-weight: bold;">&nbsp;Minha Conta</li>
+    </ol>
+</div>
+
+<div class="container">
+    <form #profileForm="ngForm">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success" role="alert" *ngIf="mensagemSucesso && mensagemSucesso.length > 0">
+                    {{ mensagemSucesso }}
+                </div>
+                <div class="alert alert-danger" role="alert" *ngFor="let erro of errors">
+                    {{ erro }}
+                </div>
+            </div>
+        </div>
+        <div class="center">
+            <fieldset style="width: 90%;">
+                <legend class="font_clamp" style="font-size: 11pt;"><span class="ml-5">Dados Pessoais</span></legend>
+                <table *ngIf="!editandoCadastro" class="ml-5 mt-4 table-responsive">
+                    <tr>
+                        <td style="width: 20%;">
+                            <img class="center" src="/assets/info_pessoais.png" width="50%" height="50%">
+                        </td>
+                        <td style="width: 80%;">
+                            <p><b>Nome:</b> {{ usuarioLogado.nome }}</p>
+                            <p><b>E-mail: </b> {{ usuarioLogado.email }}</p>
+                            <p *ngIf="usuarioLogado.numeroCelular"><b>Celular: </b> {{ telefoneCelular }} </p>
+                            <p *ngIf="usuarioLogado.cpf"><b>CPF: </b> {{ cpf }}</p>
+                            <br/>
+                        </td>
+                    </tr>
+                    <tr class="center mt-1">
+                        <button type="button" mat-raised-button color="primary"
+                            style="margin: 0 10px;"
+                            (click)="editarCadastro()">
+                                Editar
+                        </button>
+                    </tr>
+                    <br/>
+                </table>
+                <table *ngIf="editandoCadastro" class="ml-5 mt-4 table-responsive">
+                    <tr>
+                        <td style="width: 20%;">
+                            <img class="center" src="/assets/info_pessoais.png" width="50%" height="50%">
+                        </td>
+                        <td>
+                            <p><b>Nome:</b>
+                                <input style="width: 60%;" type="text" name="nome" size="51" maxlength="50"
+                                        [(ngModel)]="nomeUsuario"
+                                        class="form-control"
+                                        placeholder="Digite seu nome"/>
+                            </p>
+                            <p><b>E-mail:</b>
+                                <input style="width: 60%;" type="text" name="email" size="51" maxlength="50"
+                                        [(ngModel)]="emailUsuario"
+                                        class="form-control"
+                                        placeholder="Digite seu e-mail"/>
+                            </p>
+                            <p><b>Celular:</b>
+                                <input style="width: 60%;" type="text" name="telefoneCelular" size="51" maxlength="15"
+                                        (keypress)="mphone()" (blur)="mphone()"
+                                        [(ngModel)]="telefoneCelular"
+                                        class="form-control"
+                                        placeholder="Digite seu número celular"/>
+                            </p>
+                            <p><b>CPF:</b>
+                                <input style="width: 60%;" type="text" class="form-control"
+                                        (keypress)="mcpf()" (blur)="mcpf()"
+                                        [(ngModel)]="cpf"
+                                        size="51" maxlength="14"
+                                        name="cpf" placeholder="Digite seu CPF"/>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr class="center mt-1">
+                        <td>
+                            <button type="button" mat-raised-button color="primary"
+                                style="margin: 0 10px;"
+                                (click)="onSubmit()">
+                                    Atualizar
+                            </button>
+                        </td>
+                        <td>
+                            <button type="button" 
+                                    mat-raised-button ml-1 color="warn"
+                                    (click)="cancelarEdicaoCadastro()">
+                                Cancelar
+                            </button>
+                        </td>
+                    </tr>
+                    <br/>
+                </table>
+            </fieldset>
+        <!--<div class="ml-5 mt-4">
+                <img class="center" src="/assets/info_pessoais.png" width="10%" height="10%">
+        </div>-->
+        </div>
+
+        <div class="center mt-4">
+            <fieldset style="width: 90%;">
+                <legend class="font_clamp" style="font-size: 11pt; background-color: lightcoral;"><span class="ml-5">Segurança</span></legend>
+                <table *ngIf="!editandoSenha" class="ml-5 mt-4 table-responsive">
+                    <tr>
+                        <td style="width: 20%;">
+                            <img style="text-align: center;" class="center" src="/assets/cadeado.png" width="50%" height="50%">
+                        </td>
+                        <td style="width: 80%;">
+                            <p><b>Senha:</b> ************** </p>
+                        </td>
+                    </tr>
+                    <tr class="center mt-1">
+                        <button type="button" mat-raised-button color="primary"
+                            style="margin: 0 10px;"
+                            (click)="editarSenha()">
+                                Editar
+                        </button>
+                    </tr>
+                    <br/>
+                </table>
+                <table *ngIf="editandoSenha" class="ml-5 mt-4 table-responsive">
+                    <tr>
+                        <td style="width: 20%;">
+                            <img class="center" src="/assets/cadeado.png" width="50%" height="50%">
+                        </td>
+                        <td>
+                            <p><b>Senha atual:</b>
+                                <input style="width: 60%;" type="password" name="senhaAtual" size="51" maxlength="50"
+                                        [(ngModel)]="senhaAtual"
+                                        class="form-control"
+                                        placeholder="Digite sua senha atual"/>
+                            </p>
+                            <p><b>Nova senha:</b>
+                                <input style="width: 60%;" type="password" name="novaSenha1" size="51" maxlength="50"
+                                        [(ngModel)]="novaSenha1"
+                                        class="form-control"
+                                        placeholder="Digite sua nova senha"/><br/>
+                                <input style="width: 60%;" type="password" name="novaSenha2" size="51" maxlength="50"
+                                        [(ngModel)]="novaSenha2"
+                                        class="form-control"
+                                        placeholder="Repita sua nova senha"
+                                        (blur)="checkSenhas()"/>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr class="center mt-1">
+                        <td>
+                            <button type="button" mat-raised-button color="primary"
+                                style="margin: 0 10px;"
+                                (click)="onSubmit()">
+                                    Alterar
+                            </button>
+                        </td>
+                        <td>
+                            <button type="button" 
+                                    mat-raised-button ml-1 color="warn"
+                                    (click)="cancelarEdicaoSenha()">
+                                Cancelar
+                            </button>
+                        </td>
+                    </tr>
+                    <br/>
+                </table>
+            </fieldset>
+        </div>
+    </form>
+</div>
+<p class="mt-5"></p>

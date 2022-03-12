@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
-import { ContribuicoesService } from 'src/app/contribuicoes.service';
-import { IgrejasService } from 'src/app/igrejas.service';
+import { ContribuicoesService } from 'src/app/services/contribuicoes.service';
+import { IgrejasService } from 'src/app/services/igrejas.service';
 import { Igreja } from 'src/app/igrejas/igreja';
-import { TipoContribuicao } from 'src/app/tipo-contribuicao/tipoContribuicao';
-import { TiposContribuicaoService } from 'src/app/tiposContribuicao.service';
-import { UsuariosService } from 'src/app/usuarios.service';
+import { TipoContribuicao } from 'src/app/contribuicoes/tipo-contribuicao/tipoContribuicao';
+import { TiposContribuicaoService } from 'src/app/services/tiposContribuicao.service';
+import { UsuariosService } from 'src/app/services/usuarios.service';
 import { Usuario } from 'src/app/usuarios/usuario';
 import { UsuarioResumido } from 'src/app/usuarios/usuarioResumido';
 
@@ -34,6 +34,8 @@ export class ContribuicoesFormComponent implements OnInit {
   isProcessandoTipos: boolean = true;
   dataContribuicaoTemp: string;
   editando: boolean;
+
+  @ViewChild('cadastrarComponent', { static: false }) cadastrarComponent: any;
 
   constructor( private service : ContribuicoesService,
     private tiposService: TiposContribuicaoService,
@@ -186,6 +188,14 @@ export class ContribuicoesFormComponent implements OnInit {
     let parsedDate = moment(data, "DD-MM-YYYY");
     let outputDate = parsedDate.format("DD/MM/YYYY");
     this.contribuicao.dataContribuicao = outputDate;
+  }
+
+  cadastrarTipoContribuicao(){
+    this.cadastrarComponent.abrirTelaCadastrar();
+  }
+
+  clicou() {
+    console.log("clicou!");
   }
   
 

@@ -160,14 +160,22 @@
                                                 (blur)="checkSenhas($event)"/>
                                         </div>
                                         <div class="center">
-                                            <button type="button" mat-raised-button color="primary" style="margin: 0 10px;"
-                                                    (click)="cadastrar()">
-                                                    Cadastrar
-                                            </button>
-                                            <button type="button" (click)="cancelarCadastro()"
-                                                    mat-raised-button ml-1 color="warn">
-                                                Cancelar
-                                            </button>
+                                            <table class="table-responsive">
+                                                <tr>
+                                                    <td>
+                                                        <button type="button" mat-raised-button color="primary" style="margin: 0 10px;"
+                                                                (click)="cadastrar()">
+                                                                Cadastrar
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" (click)="cancelarCadastro()"
+                                                                mat-raised-button ml-1 color="warn">
+                                                            Cancelar
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </table>
                                         </div>
                                     </form>
                                 </div>

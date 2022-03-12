@@ -2,7 +2,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { UsuariosService } from 'src/app/usuarios.service';
+import { Igreja } from 'src/app/igrejas/igreja';
+import { IgrejasService } from 'src/app/services/igrejas.service';
+import { ReportsService } from 'src/app/services/reports.service';
+import { UsuariosService } from 'src/app/services/usuarios.service';
 import { Usuario } from '../usuario';
 
 @Component({
@@ -21,11 +24,16 @@ export class UsuariosListComponent implements OnInit {
   totalElementos = 0;
   paginaAtual: number = 0;
   tamanho = 10;
-  //pageSizeOptions: number[] = [10, 20];
+  loginUsuarioLogado: string;
   paginas: number[];
   ultimaPagina: number;
+  usuario : Usuario;
+  idIgrejaSelecionada: number;
+  igrejas: Igreja[];
 
-  constructor(private service : UsuariosService, 
+  constructor(private service : UsuariosService,
+    private igrejasService: IgrejasService,
+    private reportsService : ReportsService, 
     private router : Router,
     private activatedRoute : ActivatedRoute) {}
 
@@ -139,6 +147,35 @@ export class UsuariosListComponent implements OnInit {
         )
     } else {
       this.mensagemErro = "Usuário selecionado não é de autocadastro! A conversão não pode ser realizada.";
+    }
+  }
+
+  definirDadosDoUsuarioLogado() {
+    this.loginUsuarioLogado = this.service.getUsuarioAutenticado();
+    let usuarioObservable = new Observable<Usuario>();
+    usuarioObservable = this.service.getUsuarioByCredential(this.loginUsuarioLogado);
+    usuarioObservable
+      .subscribe(usuario => {
+        this.usuario = usuario;
+        if (usuario.igrejas.length > 0) {
+          this.igrejas = usuario.igrejas;
+        } else {
+          this.igrejasService.getIgrejasByGrupoCongregacional(usuario.grupoCongregacional.id)
+            .subscribe( response => this.igrejas = response
+            )
+        }
+        });
+  }
+
+  gerarRelatorioDeMembrosDaIgreja() {
+    this.definirDadosDoUsuarioLogado();
+    setTimeout(() => this.definirIgrejaEGerar(), 1000);
+  }
+
+  definirIgrejaEGerar() {
+    if (this.igrejas && this.igrejas.length == 1) this.idIgrejaSelecionada = this.igrejas[0].id;
+    if (this.idIgrejaSelecionada) {
+      this.reportsService.gerarRelatorioDeMembrosDaIgreja(this.idIgrejaSelecionada);
     }
   }
 

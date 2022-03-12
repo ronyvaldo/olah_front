@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Usuario } from './usuarios/usuario';
+import { Usuario } from '../usuarios/usuario';
 import { HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { TokenDto } from './models/token-dto';
-import { PaginaUsuario } from './usuarios/paginaUsuario';
+import { TokenDto } from '../models/token-dto';
+import { PaginaUsuario } from '../usuarios/paginaUsuario';
 
 const header = {headers: new HttpHeaders({'content-Type' : 'application/json'})};
 const Token_key = 'AuthToken';
@@ -16,6 +16,7 @@ const Token_key = 'AuthToken';
 export class UsuariosService {
 
   apiURL: string = environment.apiUrlBase + "/api/usuarios";
+  apiURLSenha: string = environment.apiUrlBase + "/api/senha";
   tokenUrl: string = environment.apiUrlBase + environment.tokenUrl;
   cientId: string = environment.clientId;
   clientSecret: string = environment.clientSecret;
@@ -26,7 +27,7 @@ export class UsuariosService {
   
 
   obterToken() {
-    const tokenString = localStorage.getItem('access_token');
+    const tokenString = sessionStorage.getItem('access_token');
     if (tokenString) {
       const token = JSON.parse(tokenString).access_token;
       return token;
@@ -35,8 +36,8 @@ export class UsuariosService {
   }
 
   encerrarSessao() {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('info_congregacao');
+    sessionStorage.removeItem('access_token');
+    sessionStorage.removeItem('info_congregacao');
   }
 
   getUsuarioAutenticado() {
@@ -132,6 +133,15 @@ export class UsuariosService {
 
   converterEmMembro(id: number) : Observable<any> {
     return this.http.put<any>(this.apiURL + `/converter=${id}`, null);
+  }
+
+  editarSenha(idUsuario: number, senhaAtual: string, novaSenha: string) : Observable<any> {
+    let atualizacaoSenha = {
+      idUsuario: idUsuario,
+      senhaAtual: senhaAtual,
+      novaSenha: novaSenha
+    }
+    return this.http.put<Usuario>(this.apiURLSenha + "/atualizar", atualizacaoSenha);
   }
 
 }

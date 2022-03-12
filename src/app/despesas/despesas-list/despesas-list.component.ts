@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DespesasService } from 'src/app/despesas.service';
+import { DespesasService } from 'src/app/services/despesas.service';
 import { Despesa } from '../despesa';
 
 @Component({

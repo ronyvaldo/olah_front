@@ -18,6 +18,10 @@
             <button *ngIf="perfil != 0" mat-mini-fab color="primary" (click)="novoUsuario()" title="Adicionar Usuário" style="border:none;">
                 <i class="material-icons" style="font-size: 35px; color:darkblue;">person_add</i>
             </button>
+            <button *ngIf="perfil == 1" mat-mini-fab color="primary" (click)="gerarRelatorioDeMembrosDaIgreja()"
+                title="Gerar Relatório de Membros" style="float: rigth" type="button" class="btn btn-success btn-block btn-sm">
+                Exportar em Excel
+            </button>
         </div>
     </div>
     <br />

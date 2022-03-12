@@ -26,17 +26,21 @@
                         <a class="nav-link" routerLink="/usuarios/list/2">Administradores</a>
                     </nav>
                 </div>
-                <a class="nav-link" routerLink="">
+                <a class="nav-link" routerLink="/calendario/view">
                     <span class="material-icons" font-size="50px">event</span>
                     &nbsp;Agenda
                 </a>
-                <a class="nav-link" routerLink="">
+                <a class="nav-link" routerLink="/eventos">
                     <span class="material-icons" font-size="50px">event_note</span>
                     &nbsp;Eventos
                 </a>
-                <a class="nav-link" routerLink="" *ngIf="perfilUsuarioLogado == 2 || perfilUsuarioLogado == 3">
+                <a class="nav-link" routerLink="/igrejas" *ngIf="perfilUsuarioLogado == 2 || perfilUsuarioLogado == 3">
                     <span class="material-icons" font-size="50px">house</span>
                     &nbsp;Igrejas
+                </a>
+                <a class="nav-link" routerLink="/gruposCongregacionais" *ngIf="perfilUsuarioLogado == 2 || perfilUsuarioLogado == 3">
+                    <span class="material-icons" font-size="50px">church</span>
+                    &nbsp;Grupos Congregacionais
                 </a>
                 <a class="nav-link collapsed" href="#" data-toggle="collapse"
                     data-target="#collapseLancamentos" aria-expanded="false"
@@ -52,7 +56,8 @@
                         <a class="nav-link" routerLink="/despesas">Despesas</a>
                     </nav>
                 </div>
-                <a class="nav-link" routerLink="" *ngIf="perfilUsuarioLogado == 2 || perfilUsuarioLogado == 3">
+                <a class="nav-link" routerLink="" *ngIf="perfilUsuarioLogado == 2 || perfilUsuarioLogado == 3"
+                        routerLink="/relatorios/gerenciador">
                     <span class="material-icons" font-size="50px">summarize</span>
                     &nbsp;Relatórios
                 </a>

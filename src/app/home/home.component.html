@@ -8,3 +8,29 @@
 <div *ngIf="perfilUsuarioLogado == 2">
     <app-graficos></app-graficos>
 </div>
+
+<div *ngIf="perfilUsuarioLogado < 2" class="center mt-5">
+    <table class="table-responsive center">
+        <tr class="center">
+            <td>
+                <p class="center"><img src="/assets/calendar.jpg" width="20%" height="20%"></p>
+            </td>
+        </tr>
+        <tr class="center mt-3">
+            <td>
+                <button style="font-size: 10pt; font-weight: normal;" type="button"
+                    class="btn btn-success btn-block btn-sm" (click)="abrirEventos()">
+                    &nbsp;&nbsp;Inscrever-se nos eventos da sua Igreja
+                </button>
+            </td>
+        </tr>
+        <tr class="center mt-3">
+            <td>
+                <button style="font-size: 10pt; font-weight: normal;" type="button"
+                    class="btn bg-danger btn-block btn-sm text-white" (click)="abrirAgenda()">
+                    &nbsp;&nbsp;Ver o calendário da sua igreja
+                </button>
+            </td>
+        </tr>
+    </table>
+</div>

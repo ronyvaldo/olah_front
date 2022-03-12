@@ -1,9 +1,9 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Chart } from 'chart.js';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SidebarComponent } from '../template/sidebar/sidebar.component';
-import { UsuariosService } from '../usuarios.service';
+import { UsuariosService } from '../services/usuarios.service';
 import { Usuario } from '../usuarios/usuario';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +18,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   
   
   constructor(private sidebar: SidebarComponent,
-    private usuarioService : UsuariosService) { }
+    private usuarioService : UsuariosService,
+    private router : Router) { }
 
   ngOnInit(): void {
     this.loginUsuarioLogado = this.usuarioService.getUsuarioAutenticado();
@@ -40,6 +41,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
           this.infoCongregacao = usuario.grupoCongregacional.nome;
         }
       });
+  }
+
+  abrirEventos() {
+    this.router.navigate(['/eventos']);
+  }
+
+  abrirAgenda() {
+    this.router.navigate(['/calendario/view']);
   }
 
 }

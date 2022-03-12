@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { UsuariosService } from '../usuarios.service';
+import { UsuariosService } from '../services/usuarios.service';
 import { Usuario } from '../usuarios/usuario';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService, SocialUser } from 'angularx-social-login';
 import { TokenDto } from '../models/token-dto';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { Igreja } from '../igrejas/igreja';
-import { IgrejasService } from '../igrejas.service';
+import { IgrejasService } from '../services/igrejas.service';
 
 @Component({
   selector: 'app-login',
@@ -63,7 +63,7 @@ export class LoginComponent {
       .tentarLogar(this.usuario.login, this.usuario.senha)
       .subscribe( response => {
         const access_token =  JSON.stringify(response);
-        localStorage.setItem('access_token', access_token);
+        sessionStorage.setItem('access_token', access_token);
         //this.definirDadosIgreja();
         this.router.navigate(['/home'])
       }, errorResponse => {
@@ -77,9 +77,9 @@ export class LoginComponent {
     usuarioObservable
       .subscribe(usuario => {
         if (usuario.igrejas.length > 0) {
-          localStorage.setItem('info_congregacao', usuario.igrejas[0].nome);
+          sessionStorage.setItem('info_congregacao', usuario.igrejas[0].nome);
         } else if (usuario.grupoCongregacional) {
-          localStorage.setItem('info_congregacao', usuario.grupoCongregacional.nome);
+          sessionStorage.setItem('info_congregacao', usuario.grupoCongregacional.nome);
         }
     });
   }*/

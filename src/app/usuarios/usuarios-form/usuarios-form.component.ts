@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { Usuario } from '../usuario';
-import { UsuariosService } from '../../usuarios.service';
+import { UsuariosService } from '../../services/usuarios.service';
 import { Observable } from 'rxjs';
 import { Igreja } from 'src/app/igrejas/igreja';
-import { IgrejasService } from 'src/app/igrejas.service';
+import { IgrejasService } from 'src/app/services/igrejas.service';
 import * as moment from 'moment';
 import { GrupoCongregacional } from 'src/app/grupos-congregacionais/grupoCongregacional';
 

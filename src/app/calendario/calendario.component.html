@@ -1,0 +1,25 @@
+<ol class="breadcrumb mb-4" style="align-content: center;">
+    <span class="material-icons" font-size="50px">event</span>
+    <li style="font-weight: bold;">&nbsp;&nbsp;Agenda/Calendário de Eventos</li>
+</ol>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <ng-container *ngIf="isCharging===false; else charging">
+                <!--<button style="font-size: 10pt;" type="button" class="btn btn-dark btn-sm" routerLink="/agendamentos/eventos">
+                    <fa-icon [icon]="fasArrowCircleLeft"></fa-icon>
+                    Voltar
+                </button>-->
+                <!--<full-calendar [options]="calendarOptions" locale="pt-br"></full-calendar>-->
+                <full-calendar defaultView="dayGridMonth" [plugins]="calendarPlugins" locale="pt-br" [header]=" { left: 'prev,next', center: 'title', right: '' } " [events]="events"></full-calendar>
+            </ng-container>
+            <ng-template #charging>
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border text-dark" role="status">
+                        <span class="sr-only">Carregando...</span>
+                    </div>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>
