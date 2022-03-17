@@ -31,7 +31,7 @@ export class GruposCongregacionaisListComponent implements OnInit {
   }
 
   listarIgrejas() {
-    this.service.getTodos(this.paginaAtual.toString(), this.tamanho.toString())
+    this.service.getTodosPaged(this.paginaAtual.toString(), this.tamanho.toString())
         .subscribe( response => {
           this.gruposCongregacionais = response.content;
           this.totalElementos = response.totalElements;

@@ -59,7 +59,8 @@ export class EventosComponent implements OnInit {
   }
   
   listarEventos() {
-    this.eventosService.getByIgreja(this.usuarioLogado.grupoCongregacional.id, this.paginaAtual.toString(), this.tamanho.toString())
+    //this.usuarioLogado.grupoCongregacional.id
+    this.eventosService.getByIgreja(this.idIgrejaSelecionada, this.paginaAtual.toString(), this.tamanho.toString())
       .subscribe(response => {
         this.listaEventos = response.content;
         this.totalElementos = response.totalElements;
@@ -71,6 +72,53 @@ export class EventosComponent implements OnInit {
           console.log(error.message);
         }
       );
+  }
+
+  criarEventosUsuarioDinamicamente() {
+    if (!this.perfilAdministrativo) {
+      $(document).ready(() => {
+        var divPai = $('#divUsuario');
+        
+        for (let i = 0; i < this.listaEventos.length; i++) {
+          var novaDiv = '';
+          let evento = this.listaEventos[i].nome;
+          let idEvento = this.listaEventos[i].id;
+          let dataInicio = this.listaEventos[i].dataInicio;
+          let dataTermino = this.listaEventos[i].dataTermino;
+          let horarioInicio = this.listaEventos[i].horarioInicio;
+          let horarioTermino = this.listaEventos[i].horarioTermino;
+          let textoHora = (dataInicio == dataTermino || !dataTermino || dataTermino == '') ?
+                      "<br/><br/> Dia "+dataInicio + " das "+horarioInicio+ " às "+horarioTermino
+                      : " <br/><br/>Início: "+dataInicio+" às "+horarioInicio+"<br/> Término: "+dataTermino+" às "+horarioTermino;
+          /*if (i > 2 && ((i+1) % 3) == 1) {
+            console.log(evento);
+            novaDiv = '<br/><br/>';
+          }*/
+          novaDiv+='<div class="col-xl-3 col-md-5" style="margin: 1em;"> ';
+          novaDiv+='<div class="card '+ this.getBgDinamicamente(i) +' text-white mb-4"> ';
+          novaDiv+='<div class="card-body"><b><font color="black" font-weight: bold;>'+evento+'</font></b>'+textoHora+'</div> ';
+          novaDiv+='<div class="card-footer d-flex align-items-center justify-content-between"> ';
+          novaDiv+='<div class="button-container"> ';
+          novaDiv+='<button mat-mini-fab color="primary" (click)="inscrever()" title="Inscrever-se neste evento" style="border:none;"> ';
+          novaDiv+='Inscrever-se</button></div></div> ';
+          novaDiv+='</div></div>';
+          divPai.append(novaDiv);
+        }
+      })
+    }
+  }
+
+  getBgDinamicamente(i : number) {
+      let arr = ['bg-info','bg-primary','bg-warning','bg-danger','bg-success'];
+      if (i > 5 && i < 11) {
+        i = i - 5;
+      } else if (i > 10) {
+        i = Math.ceil(i % 5);
+      }
+      /*if (i > 1) {
+        i = i-1;
+      }*/
+      return arr[i];
   }
 
   excluirEventos(){
@@ -131,7 +179,11 @@ export class EventosComponent implements OnInit {
   }
 
   definirIgrejaSelecionada() {
-    if (this.idIgrejaSelecionada) {
+    if (!this.perfilAdministrativo && this.usuarioLogado.igrejas) {
+      this.idIgrejaSelecionada = this.usuarioLogado.igrejas[0].id;
+      this.listarEventos();
+      setTimeout(() => this.criarEventosUsuarioDinamicamente(), 500);
+    } else {
       this.alterarComponent.atribuirIgreja(this.idIgrejaSelecionada);
       this.listarEventos();
     }
@@ -152,5 +204,10 @@ export class EventosComponent implements OnInit {
       erro => this.mensagemErro = `Ocorreu um erro ao excluir o evento ${this.eventoSelecionado.nome}.`
     )
   }
+
+  inscrever() {
+
+  }
+  
 
 }

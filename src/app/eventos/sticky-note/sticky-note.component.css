@@ -1,0 +1,28 @@
+.note {
+    max-width: 15rem;
+  ;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 1px 4px #999;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 2rem;
+    width: 100%;
+    background: #9BD1E5;
+  }
+  
+  .header-text {
+    margin: 0.5rem;
+    font-weight: bold;
+  }
+  
+  .content {
+    padding: 0.5rem;
+    background: #D1FAFF;
+  }
+  

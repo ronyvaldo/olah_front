@@ -18,6 +18,13 @@ export class IgrejasService {
         return this.http.get<any>(this.apiURL);
     }
 
+    getTodasPaged(page: string, size: string) : Observable<PaginaIgreja> {
+        const params = new HttpParams()
+        .set('page', page)
+        .set('size', size);
+        return this.http.get<any>(this.apiURL + `/paginado?${params.toString()}`);
+    }
+
     getIgrejasByGrupoCongregacional(idGrupo: number) : Observable<Igreja[]> {
         return this.http.get<any>(this.apiURL + `/grupoCongregacional=${idGrupo}`);
     }

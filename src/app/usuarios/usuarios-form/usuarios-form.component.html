@@ -47,8 +47,10 @@
             <div *ngIf="perfil == 2" class="col-md-3 mt-4">
                 <div class="form-group">
                     <label>Grupo Congregacional:&nbsp;</label>
-                    <select>
-                        <option selected>{{ nomeGrupoCongregacional }}</option>
+                    <select (change)="atribuirGrupo($event)">
+                        <option *ngFor="let grupo of grupos" [ngValue]="grupo.id" [value]="grupo.id">
+                            {{ grupo.nome }}
+                        </option>
                     </select>
                 </div>
             </div>

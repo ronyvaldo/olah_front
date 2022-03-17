@@ -1,21 +1,26 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ComponentFactoryResolver, ViewContainerRef, ComponentRef } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Evento } from '../eventos/evento';
 import { environment } from 'src/environments/environment';
 import { PaginaEvento } from '../eventos/PaginaEvento';
 import { EventoUsuario } from '../eventos/eventoUsuario';
+import { StickyNoteDto } from '../eventos/sticky-note/sticky-note-dto';
+import { StickyNoteComponent } from '../eventos/sticky-note/sticky-note.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventosService {
 
+  private noteSubject = new Subject<StickyNoteDto>();
+
   apiURL: string = environment.apiUrlBase + "/api/eventos";
 
   apiUrlUsuario: string = environment.apiUrlBase + "/api/eventoUsuario";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private componentFactory: ComponentFactoryResolver) { }
 
   getTodos(): Observable<Evento[]>{
     return this.http.get<any>(this.apiURL);
@@ -47,5 +52,29 @@ export class EventosService {
   inscrever(eventoUsuario : EventoUsuario): Observable<EventoUsuario> {
     return this.http.post<EventoUsuario>(this.apiUrlUsuario, eventoUsuario);
   }
+
+  public open(noteTemplateRef: () => ViewContainerRef): void {
+    this.noteSubject.asObservable().subscribe(helpTextData => {
+      const stickyNoteComponent = this.createNoteComponent(noteTemplateRef);
+      stickyNoteComponent.instance.openNote(helpTextData);
+    });
+  }
+
+  public initOpenNote(text: string, event: MouseEvent): void {
+    this.noteSubject.next({
+      content: text,
+      coordinates: event
+    });
+  }
+
+  private createNoteComponent(stickyNotesRef: () => ViewContainerRef): ComponentRef<StickyNoteComponent> {
+    const factory = this.componentFactory.resolveComponentFactory(StickyNoteComponent);
+    return stickyNotesRef().createComponent(factory);
+  }
+
+  ngOnDestroy(): void {
+    this.noteSubject.unsubscribe();
+  }
+
 
 }

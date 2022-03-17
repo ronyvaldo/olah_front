@@ -8,6 +8,7 @@ import { Igreja } from 'src/app/igrejas/igreja';
 import { IgrejasService } from 'src/app/services/igrejas.service';
 import * as moment from 'moment';
 import { GrupoCongregacional } from 'src/app/grupos-congregacionais/grupoCongregacional';
+import { GruposCongregacionaisService } from 'src/app/services/grupoCongregacional.service';
 
 @Component({
   selector: 'app-usuarios-form',
@@ -30,9 +31,11 @@ export class UsuariosFormComponent implements OnInit {
   idade: number;
   nomeGrupoCongregacional: string;
   idGrupoCongregacional: number;
+  grupos : GrupoCongregacional[];
 
   constructor( private service : UsuariosService,
     private igrejasService: IgrejasService,
+    private gruposService : GruposCongregacionaisService,
     private router : Router,
     private activatedRoute : ActivatedRoute) { 
     this.usuario = new Usuario();
@@ -62,7 +65,7 @@ export class UsuariosFormComponent implements OnInit {
         }
       }
     })
-    this.definirDadosDoUsuarioLogado();
+    setTimeout(() => this.definirDadosDoUsuarioLogado(), 500);
   }
 
   definirDadosDoUsuarioLogado() {
@@ -71,14 +74,29 @@ export class UsuariosFormComponent implements OnInit {
     usuarioObservable
       .subscribe(usuario => {
         this.usuario.usuarioCadastro = usuario;
-        this.nomeGrupoCongregacional = usuario.grupoCongregacional.nome;
-        this.idGrupoCongregacional = usuario.grupoCongregacional.id;
-        if (usuario.igrejas.length > 0) {
+        if (usuario.grupoCongregacional) {
+            /*this.nomeGrupoCongregacional = usuario.grupoCongregacional.nome;
+            this.idGrupoCongregacional = usuario.grupoCongregacional.id;*/
+            this.grupos = [];
+            this.grupos.push(usuario.grupoCongregacional);
+        } else {
+          this.gruposService.getTodos()
+              .toPromise().then( response => {
+                this.grupos = response;
+              })
+        }
+        if (usuario.igrejas && usuario.igrejas.length > 0) {
           this.igrejas = usuario.igrejas;
         } else {
-          this.igrejasService.getIgrejasByGrupoCongregacional(usuario.grupoCongregacional.id)
-            .subscribe( response => this.igrejas = response
-            )
+          if (usuario.perfil == 3) {
+            this.igrejasService.getTodas()
+              .subscribe( response => this.igrejas = response
+              )
+          } else {
+            this.igrejasService.getIgrejasByGrupoCongregacional(usuario.grupoCongregacional.id)
+              .subscribe( response => this.igrejas = response
+              )
+          }
         }
         });
   }
@@ -144,6 +162,13 @@ export class UsuariosFormComponent implements OnInit {
   atribuirIgreja(event: any) {
     if (event.target && event.target != "") {
       this.idIgrejaSelecionada = event.target.value;
+    }
+  }
+
+  atribuirGrupo(event: any) {
+    if (event.target && event.target != "") {
+      this.idGrupoCongregacional = event.target.value;
+      this.idIgrejaSelecionada = 0;
     }
   }
 

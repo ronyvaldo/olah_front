@@ -28,7 +28,7 @@ export class ProfileComponent implements OnInit {
   constructor(private usuarioService : UsuariosService) { }
 
   ngOnInit(): void {
-    this.comporUsuarioLogado();
+    setTimeout(() => this.comporUsuarioLogado(), 500);
   }
 
   comporUsuarioLogado() {

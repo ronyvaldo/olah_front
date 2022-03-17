@@ -40,14 +40,25 @@ export class IgrejasListComponent implements OnInit {
   }
 
   listarIgrejas() {
-    this.service.getIgrejasByGrupoCongregacionalPaged(this.usuarioLogado.grupoCongregacional.id, this.paginaAtual.toString(), this.tamanho.toString())
-        .subscribe( response => {
-          this.igrejas = response.content;
-          this.totalElementos = response.totalElements;
-          this.paginaAtual = response.number;
-          this.definirPaginas();
-        }, (erro: HttpErrorResponse) => erro.status == 403 ? this.forbidden() : console.log(erro.status)
-    )
+    if (this.usuarioLogado.perfil != 3) {
+        this.service.getIgrejasByGrupoCongregacionalPaged(this.usuarioLogado.grupoCongregacional.id, this.paginaAtual.toString(), this.tamanho.toString())
+            .subscribe( response => {
+              this.igrejas = response.content;
+              this.totalElementos = response.totalElements;
+              this.paginaAtual = response.number;
+              this.definirPaginas();
+            }, (erro: HttpErrorResponse) => erro.status == 403 ? this.forbidden() : console.log(erro.status)
+        )
+      } else {
+        this.service.getTodasPaged(this.paginaAtual.toString(), this.tamanho.toString())
+            .subscribe( response => {
+              this.igrejas = response.content;
+              this.totalElementos = response.totalElements;
+              this.paginaAtual = response.number;
+              this.definirPaginas();
+            }, (erro: HttpErrorResponse) => erro.status == 403 ? this.forbidden() : console.log(erro.status)
+        )
+      }
   }
 
   forbidden() {

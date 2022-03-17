@@ -7,11 +7,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EventosComponent } from './eventos.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CadastrarEventoModule } from './cadastrar-evento/cadastrar-evento.module';
+import { StickyNoteComponent } from './sticky-note/sticky-note.component';
 
 
 @NgModule({
   declarations: [
-    EventosComponent
+    EventosComponent,
+    StickyNoteComponent
   ],
   imports: [
     CommonModule,

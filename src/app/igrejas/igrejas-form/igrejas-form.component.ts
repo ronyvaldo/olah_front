@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { GrupoCongregacional } from 'src/app/grupos-congregacionais/grupoCongregacional';
+import { GruposCongregacionaisService } from 'src/app/services/grupoCongregacional.service';
 import { IgrejasService } from 'src/app/services/igrejas.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { Usuario } from 'src/app/usuarios/usuario';
@@ -28,7 +29,8 @@ export class IgrejasFormComponent implements OnInit {
   constructor(private service : IgrejasService,
               private router : Router,
               private activatedRoute : ActivatedRoute,
-              private usuarioService: UsuariosService) { }
+              private usuarioService: UsuariosService,
+              private gruposService : GruposCongregacionaisService) { }
 
   ngOnInit(): void {
       let params : Observable<Params> = this.activatedRoute.params;
@@ -91,6 +93,13 @@ export class IgrejasFormComponent implements OnInit {
         if (this.usuarioLogado.perfil == 2) {
           this.grupos[0] = this.usuarioLogado.grupoCongregacional;
           this.isProcessandoGrupo = false;
+        }
+        if (this.usuarioLogado.perfil == 3) {
+          this.gruposService.getTodos()
+            .toPromise().then( response => {
+              this.grupos = response;
+              this.isProcessandoGrupo = false;
+            })
         }
       }, errrorResponse => {
         this.errors = ['Ocorreu um erro ao definir dados para cadastro de Igreja!']

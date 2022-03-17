@@ -14,11 +14,15 @@ export class GruposCongregacionaisService {
 
     constructor( private http: HttpClient ) { }
 
-    getTodos(page: string, size: string) : Observable<PaginaGrupoCongregacional> {
+    getTodos() : Observable<GrupoCongregacional[]> {
+        return this.http.get<any>(this.apiURL);
+    }
+
+    getTodosPaged(page: string, size: string) : Observable<PaginaGrupoCongregacional> {
         const params = new HttpParams()
         .set('page', page)
         .set('size', size);
-        return this.http.get<any>(this.apiURL+`?${params.toString()}`);
+        return this.http.get<any>(this.apiURL+`/paginado?${params.toString()}`);
     }
 
     getGrupoById(id: number) : Observable<GrupoCongregacional> {
