@@ -2,3 +2,48 @@
     <span class="material-icons" font-size="50px">summarize</span>
     <li style="font-weight: bold;">&nbsp;&nbsp;Relatórios</li>
 </ol>
+<div class="form-2-container section-container section-container-gray-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col form-2-box wow fadeInUp">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <fieldset class="form-group border p-3">
+                                <legend class="w-auto px-2" style="font-size: 10pt;">Membros</legend>
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <button type="submit" class="btn btn-primary btn-customized" style="font-size: 10pt;"
+                                            data-toggle="modal" data-target="#modalIgrejas">
+                                            Gerar Relatório de Membros
+                                        </button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalIgrejas" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Selecione a Igreja para geração do relatório</h4>
+            </div>
+            <div class="form-group center">
+                <select>
+                    <option *ngFor="let igreja of igrejas" [ngValue]="idIgrejaSelecionada" [value]="idIgrejaSelecionada">
+                        {{ igreja.nome }}
+                    </option>
+                </select>
+                <img src="/assets/loading.gif" width="48" height="48" alt="Carregando" *ngIf="isProcessandoIgreja">
+            </div>
+           <div class="modal-footer">
+               <button class="btn btn-success" (click)="gerarRelatorioDeMembros()" data-dismiss="modal">Gerar</button>
+               <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+           </div>
+        </div>
+    </div>
+</div>

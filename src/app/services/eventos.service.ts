@@ -28,9 +28,13 @@ export class EventosService {
 
   getByIgreja(idIgreja: number, page: string, size: string) : Observable<PaginaEvento> {
     const params = new HttpParams()
-    .set('page', page)
-    .set('size', size);
+      .set('page', page)
+      .set('size', size);
     return this.http.get<any>(this.apiURL + `/idIgreja=${idIgreja}?${params.toString()}`);
+  }
+
+  getEventosUsuario(idUsuario: number, idIgreja: number): Observable<Evento[]>{
+    return this.http.get<any>(this.apiURL + `/idUsuario=${idUsuario}?idIgreja=${idIgreja}`);
   }
 
   salvar(evento : Evento): Observable<Evento> {

@@ -13,4 +13,5 @@ export class Evento {
     idadeMinima: number;
     idadeMaxima: number;
     igreja: Igreja;
+    usuarioInscrito: boolean;
 }

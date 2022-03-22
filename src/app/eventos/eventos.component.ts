@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { EventosService } from '../services/eventos.service';
 import { Evento } from './evento';
 import { faCalendarPlus, faCalendarTimes, faEdit, faFrown } from '@fortawesome/free-regular-svg-icons';
@@ -7,6 +7,8 @@ import { Usuario } from '../usuarios/usuario';
 import { UsuariosService } from '../services/usuarios.service';
 import { Igreja } from '../igrejas/igreja';
 import { IgrejasService } from '../services/igrejas.service';
+import { EventoUsuario } from './eventoUsuario';
+import { HtmlParser } from '@angular/compiler';
 
 @Component({
   selector: 'app-eventos',
@@ -43,6 +45,7 @@ export class EventosComponent implements OnInit {
   mensagemErro : String;
   eventoSelecionado: Evento;
   perfilAdministrativo: boolean;
+  errors: String[];
 
   @ViewChild('excluirComponent', { static: false }) excluirComponent: any;
 
@@ -50,16 +53,17 @@ export class EventosComponent implements OnInit {
 
   constructor(private eventosService: EventosService,
       private usuarioService : UsuariosService,
-      private igrejasService: IgrejasService) { }
+      private igrejasService: IgrejasService,
+      private elementRef:ElementRef) { }
    
   ngOnInit() {
     this.loginUsuarioLogado = this.usuarioService.getUsuarioAutenticado();
     this.definirDadosDoUsuario();
     setTimeout(() => this.definirIgrejaSelecionada(), 800);
+    this.errors = [];
   }
   
   listarEventos() {
-    //this.usuarioLogado.grupoCongregacional.id
     this.eventosService.getByIgreja(this.idIgrejaSelecionada, this.paginaAtual.toString(), this.tamanho.toString())
       .subscribe(response => {
         this.listaEventos = response.content;
@@ -90,19 +94,28 @@ export class EventosComponent implements OnInit {
           let textoHora = (dataInicio == dataTermino || !dataTermino || dataTermino == '') ?
                       "<br/><br/> Dia "+dataInicio + " das "+horarioInicio+ " às "+horarioTermino
                       : " <br/><br/>Início: "+dataInicio+" às "+horarioInicio+"<br/> Término: "+dataTermino+" às "+horarioTermino;
-          /*if (i > 2 && ((i+1) % 3) == 1) {
-            console.log(evento);
-            novaDiv = '<br/><br/>';
-          }*/
+          let buttonId = "button"+idEvento;
+
           novaDiv+='<div class="col-xl-3 col-md-5" style="margin: 1em;"> ';
           novaDiv+='<div class="card '+ this.getBgDinamicamente(i) +' text-white mb-4"> ';
           novaDiv+='<div class="card-body"><b><font color="black" font-weight: bold;>'+evento+'</font></b>'+textoHora+'</div> ';
           novaDiv+='<div class="card-footer d-flex align-items-center justify-content-between"> ';
           novaDiv+='<div class="button-container"> ';
-          novaDiv+='<button mat-mini-fab color="primary" (click)="inscrever()" title="Inscrever-se neste evento" style="border:none;"> ';
-          novaDiv+='Inscrever-se</button></div></div> ';
-          novaDiv+='</div></div>';
+          if (!this.listaEventos[i].usuarioInscrito) {
+            novaDiv+='<button id="'+ buttonId +'" type="submit" mat-mini-fab color="primary" title="Inscrever-se neste evento" style="border:none;"> ';
+            novaDiv+='Inscrever-se</button>';
+          } else {
+            //novaDiv+='<p style="border-width: 2px; border-style: dashed; border-color: #f00; size: 20em">';
+            novaDiv+='<span class="material-icons" font-size="30px" style="color: black;">';
+            novaDiv+='done</span>&nbsp;<u>Inscrito</u>';
+          }
+          novaDiv+='</div></div></div></div>';
+
           divPai.append(novaDiv);
+          if (!this.listaEventos[i].usuarioInscrito) {
+            this.elementRef.nativeElement.querySelector("#"+buttonId)
+              .addEventListener('click', () => this.inscrever(idEvento));
+          }
         }
       })
     }
@@ -181,7 +194,10 @@ export class EventosComponent implements OnInit {
   definirIgrejaSelecionada() {
     if (!this.perfilAdministrativo && this.usuarioLogado.igrejas) {
       this.idIgrejaSelecionada = this.usuarioLogado.igrejas[0].id;
-      this.listarEventos();
+      this.eventosService.getEventosUsuario(this.usuarioLogado.id, this.idIgrejaSelecionada)
+        .subscribe(response => {
+            this.listaEventos = response;
+        });
       setTimeout(() => this.criarEventosUsuarioDinamicamente(), 500);
     } else {
       this.alterarComponent.atribuirIgreja(this.idIgrejaSelecionada);
@@ -205,8 +221,21 @@ export class EventosComponent implements OnInit {
     )
   }
 
-  inscrever() {
-
+  inscrever(id: any) {
+    const eventoUsuario = new EventoUsuario();
+    eventoUsuario.evento = new Evento();
+    eventoUsuario.evento.id = id;
+    eventoUsuario.usuario = this.usuarioLogado;
+    this.eventosService.inscrever(eventoUsuario)
+      .subscribe(
+        response => {
+          let buttonId = "button"+id;
+          $("#"+buttonId).replaceWith('<span class="material-icons" font-size="30px" style="color: black;">'+
+                      'done</span>&nbsp;<u>Inscrito</u>');
+        }, errorResponse => {
+          console.log(errorResponse.error);
+          this.errors = errorResponse.error.errors;
+        });
   }
   
 
