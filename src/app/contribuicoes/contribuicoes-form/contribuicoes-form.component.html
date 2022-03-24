@@ -87,14 +87,10 @@
                             </option>
                         </select>&nbsp;
                         <img src="/assets/loading.gif" width="48" height="48" alt="Carregando" *ngIf="isProcessandoTipos">
-                            <button style="width: 50%; font-size: 10pt; font-weight: normal;" type="button" class="btn btn-success btn-block btn-sm"
-                                    data-toggle="modal" data-target="#cadastrarTipoContribuicao" (click)="clicou()">
-                                &nbsp;&nbsp;Adicionar Evento
-                            </button>
-                        <!--<button mat-mini-fab color="primary" type="button" title="Adicionar novo Tipo de Contribuição"
-                                style="border:none;" data-toggle="modal" (click)="tipoContribuicao.toggle()">
+                        <button mat-mini-fab color="primary" type="button" title="Adicionar novo Tipo de Contribuição"
+                            style="border:none;" data-toggle="modal" data-target="#cadastrarTipoContribuicao">
                             <span class="material-icons" font-size="50px">control_point</span>
-                        </button>-->
+                        </button>
                     </div>
                 </div>
             </div>
@@ -130,8 +126,4 @@
     </form>
 </div>
 
-<!--<app-tipoContribuicao #tipoContribuicao>
-    <button (click)="tipoContribuicao.toggle();" class="btn-primario">
-        Fechar
-    </button>
-</app-tipoContribuicao>-->
+<app-tipoContribuicao></app-tipoContribuicao>

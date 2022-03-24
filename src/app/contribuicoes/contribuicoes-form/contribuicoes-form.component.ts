@@ -194,9 +194,4 @@ export class ContribuicoesFormComponent implements OnInit {
     this.cadastrarComponent.abrirTelaCadastrar();
   }
 
-  clicou() {
-    console.log("clicou!");
-  }
-  
-
 }

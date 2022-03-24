@@ -1,9 +1,9 @@
-<div class="modal fade" id="cadastrarTipoContribuicao" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="cadastrarTipoContribuicaoLabel" aria-hidden="true">
+<div class="modal fade" id="cadastrarTipoDespesa" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="cadastrarTipoDespesaLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="cadastrarTipoContribuicaoLabel">
-                    <span>Cadastro de Tipo de Contribuição</span>
+                <h5 class="modal-title" id="cadastrarTipoDespesaLabel">
+                    <span>Cadastro de Tipo de Despesa</span>
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeModal"
                     (click)="limparDados()">
@@ -12,7 +12,7 @@
             </div>
             <div>
                 <div class="alert alert-success" role="alert" *ngIf="success == true">
-                    Tipo de Contribuição cadastrado com sucesso!
+                    Tipo de Despesa cadastrado com sucesso!
                 </div>
                 <div class="alert alert-danger" role="alert" *ngIf="erro == true">
                     {{ mensagemErro }}
@@ -20,8 +20,8 @@
                 <div class="row center">
                     <div class="col-md-5">
                         <div class="form-group">
-                            <label class="form-label">Nome Tipo Contribuição:</label>
-                            <input type="text" class="form-control" [(ngModel)]="tipoContribuicao.nome"
+                            <label class="form-label">Nome Tipo Despesa:</label>
+                            <input type="text" class="form-control" [(ngModel)]="tipoDespesa.nome"
                                 name="nome" size="60" maxlength="50" placeholder="Nome (Obrigatório)"/>
                         </div>
                     </div>

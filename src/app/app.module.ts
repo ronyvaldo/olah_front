@@ -51,6 +51,8 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { GruposCongregacionaisModule } from './grupos-congregacionais/grupos-congregacionais.module';
 import { TipoContribuicaoModule } from './contribuicoes/tipo-contribuicao/tipo-contribuicao.module';
 import { RelatoriosModule } from './relatorios/relatorios.module';
+import { TipoDespesa } from './despesas/tipo-despesa/tipoDespesa';
+import { TipoDespesaModule } from './despesas/tipo-despesa/tipo-despesa.module';
 
 
 registerLocaleData(ptBr);
@@ -79,6 +81,7 @@ registerLocaleData(ptBr);
     CalendarioModule,
     GruposCongregacionaisModule,
     TipoContribuicaoModule,
+    TipoDespesaModule,
     RelatoriosModule,
     ReactiveFormsModule,
     MatButtonModule,

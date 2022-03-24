@@ -6,6 +6,7 @@ import { DespesasFormComponent } from './despesas-form/despesas-form.component';
 import { DespesasListComponent } from './despesas-list/despesas-list.component';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TipoDespesaModule } from './tipo-despesa/tipo-despesa.module';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     CommonModule,
     FormsModule,
     NgbModule,
-    DespesasRoutingModule
+    DespesasRoutingModule,
+    TipoDespesaModule
   ]
 })
 export class DespesasModule { }

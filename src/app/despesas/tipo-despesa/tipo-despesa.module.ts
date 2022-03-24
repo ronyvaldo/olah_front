@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { TipoContribuicaoFormComponent } from './tipo-contribuicao-form.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule } from '@angular/forms';
+import { TipoDespesaFormComponent } from './tipo-despesa-form.component';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
   declarations: [
-    TipoContribuicaoFormComponent
+    TipoDespesaFormComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +20,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     FontAwesomeModule
   ],
   exports: [
-    TipoContribuicaoFormComponent
+    TipoDespesaFormComponent
   ]
 })
-export class TipoContribuicaoModule { }
+export class TipoDespesaModule { }

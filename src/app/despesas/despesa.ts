@@ -1,6 +1,6 @@
 import { Igreja } from "../igrejas/igreja";
-import { TipoDespesa } from "../tipo-despesa/tipoDespesa";
 import { Usuario } from "../usuarios/usuario";
+import { TipoDespesa } from "./tipo-despesa/tipoDespesa";
 
 export class Despesa {
 

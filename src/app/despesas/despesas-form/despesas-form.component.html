@@ -50,6 +50,10 @@
                             </option>
                         </select>
                         <img src="/assets/loading.gif" width="48" height="48" alt="Carregando" *ngIf="isProcessandoTipos">
+                        <button mat-mini-fab color="primary" type="button" title="Adicionar novo Tipo de Despesa"
+                            style="border:none;" data-toggle="modal" data-target="#cadastrarTipoDespesa">
+                            <span class="material-icons" font-size="50px">control_point</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -99,3 +103,6 @@
         </div>
     </form>
 </div>
+
+
+<app-tipoDespesa></app-tipoDespesa>

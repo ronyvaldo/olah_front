@@ -132,7 +132,6 @@ export class UsuariosFormComponent implements OnInit {
           this.voltarParaListagem();
         }, errorResponse => {
           this.success = false;
-          console.log(errorResponse.error);
           this.errors = errorResponse.error.errors;
         })
     }

@@ -1,25 +1,24 @@
-import { trigger } from '@angular/animations';
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { GrupoCongregacional } from 'src/app/grupos-congregacionais/grupoCongregacional';
 import { Igreja } from 'src/app/igrejas/igreja';
-import { TiposContribuicaoService } from 'src/app/services/tiposContribuicao.service';
+import { TiposDespesasService } from 'src/app/services/tiposDespesas.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { Usuario } from 'src/app/usuarios/usuario';
-import { TipoContribuicao } from './tipoContribuicao';
+import { TipoDespesa } from './tipoDespesa';
 
 @Component({
-  selector: 'app-tipoContribuicao',
-  templateUrl: './tipo-contribuicao-form.component.html',
-  styleUrls: ['./tipo-contribuicao-form.component.css']
+  selector: 'app-tipoDespesa',
+  templateUrl: './tipo-despesa-form.component.html',
+  styleUrls: ['./tipo-despesa-form.component.css']
 })
-export class TipoContribuicaoFormComponent implements OnInit {
+export class TipoDespesaFormComponent implements OnInit {
 
   loginUsuarioLogado: string;
   igrejas: Igreja[];
   grupoCongregacional: GrupoCongregacional;
-  tipoContribuicao: TipoContribuicao = new TipoContribuicao();
+  tipoDespesa: TipoDespesa = new TipoDespesa();
   igrejaSelecionada: Igreja;
   mostrar: boolean = false;
   success: boolean = false;
@@ -33,11 +32,10 @@ export class TipoContribuicaoFormComponent implements OnInit {
 
   public fasTimesCircle = faTimesCircle;
 
-  constructor(private service : TiposContribuicaoService,
+  constructor(private service : TiposDespesasService,
               private usuarioService : UsuariosService) { }
 
   ngOnInit(): void {
-    console.log("testou!");
     this.loginUsuarioLogado = this.usuarioService.getUsuarioAutenticado();
     this.definirDadosUsuarioLogado();
   }
@@ -60,17 +58,17 @@ export class TipoContribuicaoFormComponent implements OnInit {
 
   onSubmit() {
     if (this.grupoCongregacional) {
-      this.tipoContribuicao.grupoCongregacional = this.grupoCongregacional;
+      this.tipoDespesa.grupoCongregacional = this.grupoCongregacional;
     } else {
-      this.tipoContribuicao.igreja = this.igrejaSelecionada;
+      this.tipoDespesa.igreja = this.igrejaSelecionada;
     }
     this.service
-      .salvar(this.tipoContribuicao)
+      .salvar(this.tipoDespesa)
       .toPromise().then( response => {
         this.success = true;
         this.erro = false;
         this.mensagemErro = '';
-        this.tipoContribuicao = new TipoContribuicao();
+        this.tipoDespesa = new TipoDespesa();
         setTimeout(() => this.close(), 1200);
       }, errorResponse => {
         this.erro = true;
@@ -83,17 +81,19 @@ export class TipoContribuicaoFormComponent implements OnInit {
     $(document).ready(function() {
       $("#closeModal").trigger('click');
     })
+    this.success = false;
+    this.erro = false;
   }
 
   cadastroLiberado() {
-    return this.tipoContribuicao.nome && this.tipoContribuicao.nome.trim() != '';
+    return this.tipoDespesa.nome && this.tipoDespesa.nome.trim() != '';
   }
 
   limparDados() {
     this.success = false;
     this.erro = false;
     this.mensagemErro = '';
-    this.tipoContribuicao.nome = '';
+    this.tipoDespesa.nome = '';
   }
 
 }

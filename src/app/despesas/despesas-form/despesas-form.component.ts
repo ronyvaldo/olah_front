@@ -5,10 +5,10 @@ import { Observable } from 'rxjs';
 import { DespesasService } from 'src/app/services/despesas.service';
 import { IgrejasService } from 'src/app/services/igrejas.service';
 import { Igreja } from 'src/app/igrejas/igreja';
-import { TipoDespesa } from 'src/app/tipo-despesa/tipoDespesa';
 import { TiposDespesasService } from 'src/app/services/tiposDespesas.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { Despesa } from '../despesa';
+import { TipoDespesa } from '../tipo-despesa/tipoDespesa';
 
 @Component({
   selector: 'app-despesas-form',
