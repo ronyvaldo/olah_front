@@ -59,7 +59,7 @@ export class EventosComponent implements OnInit {
   ngOnInit() {
     this.loginUsuarioLogado = this.usuarioService.getUsuarioAutenticado();
     this.definirDadosDoUsuario();
-    setTimeout(() => this.definirIgrejaSelecionada(), 1000);
+    setTimeout(() => this.definirIgrejaSelecionada(), 1300);
     this.errors = [];
   }
   
