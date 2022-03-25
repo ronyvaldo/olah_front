@@ -49,7 +49,7 @@ export class TipoContribuicaoFormComponent implements OnInit {
       .subscribe(usuario => {
         if (usuario.igrejas.length > 0) {
           this.igrejas = usuario.igrejas;
-          if (this.igrejas.length > 1) {
+          if (this.igrejas.length >= 1) {
             this.igrejaSelecionada = this.igrejas[0];
           }
         } else if (usuario.grupoCongregacional) {

@@ -138,7 +138,7 @@ export class UsuariosFormComponent implements OnInit {
   }
 
   definirIgrejaUsuarioCadastro() {
-    if (this.igrejas.length > 1) {
+    if (this.igrejas.length >= 1) {
       this.idIgrejaSelecionada = this.igrejas[0].id;
     }
     this.usuario.igrejas = new Array<Igreja>();

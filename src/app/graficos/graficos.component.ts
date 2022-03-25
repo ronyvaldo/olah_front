@@ -148,7 +148,7 @@ export class GraficosComponent implements OnInit {
           this.igrejasService.getIgrejasByGrupoCongregacional(usuario.grupoCongregacional.id)
             .toPromise().then(response => {
               this.igrejas = response;
-              if (this.igrejas.length > 1) {
+              if (this.igrejas.length >= 1) {
                 this.idIgrejaSelecionada = this.igrejas[0].id;
               }
             });

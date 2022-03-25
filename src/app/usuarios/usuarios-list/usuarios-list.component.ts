@@ -176,7 +176,7 @@ export class UsuariosListComponent implements OnInit {
   }
   
   definirIgrejaEGerar() {
-    if (this.igrejas && this.igrejas.length > 1) this.idIgrejaSelecionada = this.igrejas[0].id;
+    if (this.igrejas && this.igrejas.length >= 1) this.idIgrejaSelecionada = this.igrejas[0].id;
     if (this.idIgrejaSelecionada) {
       this.isProcessando = true;
       this.reportsService.gerarRelatorioDeMembrosDaIgreja(this.idIgrejaSelecionada)

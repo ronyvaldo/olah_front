@@ -111,7 +111,7 @@ export class DespesasFormComponent implements OnInit {
   }
 
   definirIgrejaCadastro() {
-    if (this.igrejas.length > 1) {
+    if (this.igrejas.length >= 1) {
       this.despesa.igreja = new Igreja();
       this.despesa.igreja.id = this.igrejas[0].id;
     }
