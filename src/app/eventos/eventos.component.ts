@@ -59,7 +59,7 @@ export class EventosComponent implements OnInit {
   ngOnInit() {
     this.loginUsuarioLogado = this.usuarioService.getUsuarioAutenticado();
     this.definirDadosDoUsuario();
-    setTimeout(() => this.definirIgrejaSelecionada(), 1300);
+    setTimeout(() => this.definirIgrejaSelecionada(), 900);
     this.errors = [];
   }
   
@@ -182,7 +182,7 @@ export class EventosComponent implements OnInit {
           this.igrejasService.getIgrejasByGrupoCongregacional(usuario.grupoCongregacional.id)
             .toPromise().then(response => {
               this.igrejas = response;
-              if (this.igrejas.length == 1) {
+              if (this.igrejas.length > 1) {
                 this.idIgrejaSelecionada = this.igrejas[0].id;
               }
             });

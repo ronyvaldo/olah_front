@@ -118,7 +118,7 @@ export class ContribuicoesFormComponent implements OnInit {
   }
 
   definirIgrejaCadastro() {
-    if (this.igrejas.length == 1) {
+    if (this.igrejas.length > 1) {
       this.contribuicao.igreja = new Igreja();
       this.contribuicao.igreja.id = this.igrejas[0].id;
     }

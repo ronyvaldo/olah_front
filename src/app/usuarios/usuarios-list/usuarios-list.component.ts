@@ -31,6 +31,7 @@ export class UsuariosListComponent implements OnInit {
   usuario : Usuario;
   idIgrejaSelecionada: number;
   igrejas: Igreja[];
+  isProcessando: boolean = false;
 
   constructor(private service : UsuariosService,
     private igrejasService: IgrejasService,
@@ -173,16 +174,18 @@ export class UsuariosListComponent implements OnInit {
     this.definirDadosDoUsuarioLogado();
     setTimeout(() => this.definirIgrejaEGerar(), 1000);
   }
-
+  
   definirIgrejaEGerar() {
-    if (this.igrejas && this.igrejas.length == 1) this.idIgrejaSelecionada = this.igrejas[0].id;
+    if (this.igrejas && this.igrejas.length > 1) this.idIgrejaSelecionada = this.igrejas[0].id;
     if (this.idIgrejaSelecionada) {
+      this.isProcessando = true;
       this.reportsService.gerarRelatorioDeMembrosDaIgreja(this.idIgrejaSelecionada)
         .subscribe(res => {
           let blob = new Blob([res.body], { type: res.headers.get('content-type') + '; charset=utf-8'});
           let headers = res.headers ? res.headers : new Map();
           let fileName = headers.get('content-disposition').split("filename=")[1];
           this.fileSaver.save(blob,fileName);
+          this.isProcessando = false;
         }
         );
     }
