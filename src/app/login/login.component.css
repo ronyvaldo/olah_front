@@ -4,3 +4,13 @@
     margin-right: auto;
     width: 50%;
   }
+
+.balao{
+  background:#72d8a5;
+  padding:15px;
+  position:relative;
+  top:20px;
+  left:120px;
+  width:50%;
+  float:left;
+}

@@ -27,6 +27,7 @@ export class LoginComponent {
   igrejas: Igreja[];
   filteredOptions: Observable<string[]>;
   keyword = 'nome';
+  isMembroCadastrado : boolean;
 
   socialUser: SocialUser;
   userLogged: SocialUser;
@@ -188,6 +189,42 @@ export class LoginComponent {
     igrejasObservable.subscribe( response => {
       this.igrejas = response;
     });
+  }
+
+  isUsuarioCadastradoSemAcesso() {
+    if (this.usuario.email && this.usuario.email.length > 1) {
+      this.usuarioService.pesquisaUsuarioSemAcesso(this.usuario.email)
+        .subscribe( response => {
+          if (response) {
+            this.usuario = response;
+            this.isMembroCadastrado = true;
+          } else {
+            this.isMembroCadastrado = false;
+          }
+        });
+    } else {
+      this.usuario = new Usuario();
+      this.isMembroCadastrado = false;
+    }
+  }
+
+  inserirSenha() {
+    if (this.confirmPass) {
+    this.usuarioService.inserirSenha(this.usuario.email, this.usuario.senha)
+      .subscribe( response => {
+        this.mensagemSucesso = `Senha criada com sucesso! Utilizar o login ${this.usuario.email} para acessar a aplicação.`
+        this.cadastrando = false;
+        this.inicializaUsuario();
+        this.errors = [];
+      }, errorResponse => {
+        this.mensagemSucesso = '';
+        this.errors = errorResponse.error.errors;
+      })
+    }
+  }
+
+  inserirSenhaLiberado() {
+    return this.confirmPass && this.usuario.senha.length > 4;
   }
 
 }

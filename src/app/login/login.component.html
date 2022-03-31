@@ -112,7 +112,8 @@
                                                     <input type="text" name="email"
                                                         [(ngModel)]="usuario.email"
                                                         class="form-control py-4"
-                                                        placeholder="Digite seu e-mail"/>
+                                                        placeholder="Digite seu e-mail"
+                                                        (blur)="isUsuarioCadastradoSemAcesso()"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -125,14 +126,20 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group">
+                                        <div *ngIf="isMembroCadastrado" class="form-row">
+                                            <div class="balao">
+                                                Legal! Identificamos que você já possui um cadastro no site como membro de uma igreja.<br/>
+                                                Agora basta criar a sua senha.
+                                            </div>
+                                        </div>
+                                        <div *ngIf="!isMembroCadastrado" class="form-group">
                                             <label class="small mb-1">Nome</label>
                                             <input type="text" name="nome"
                                                 [(ngModel)]="usuario.nome"
                                                 class="form-control py-4"
                                                 placeholder="Digite seu nome"/>
                                         </div>
-                                        <div class="form-group">
+                                        <div *ngIf="!isMembroCadastrado" class="form-group">
                                             <label class="form-label">Igreja (digite o nome para pesquisar):</label>
                                             <ng-autocomplete [data]="igrejas"
                                                 (selected)="igrejaSelecionada($event)"
@@ -159,23 +166,21 @@
                                                 placeholder="Confirme sua senha"
                                                 (blur)="checkSenhas($event)"/>
                                         </div>
-                                        <div class="center">
-                                            <table class="table-responsive">
-                                                <tr>
-                                                    <td>
-                                                        <button type="button" mat-raised-button color="primary" style="margin: 0 10px;"
-                                                                (click)="cadastrar()">
-                                                                Cadastrar
-                                                        </button>
-                                                    </td>
-                                                    <td>
-                                                        <button type="button" (click)="cancelarCadastro()"
-                                                                mat-raised-button ml-1 color="warn">
-                                                            Cancelar
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            </table>
+                                        <div *ngIf="!isMembroCadastrado" style="margin: 0 auto; text-align: center;">
+                                            <button type="button" mat-raised-button color="primary" style="margin: 0 10px;"
+                                                    (click)="cadastrar()">
+                                                    Cadastrar
+                                            </button>
+                                            <button type="button" (click)="cancelarCadastro()"
+                                                    mat-raised-button ml-1 color="warn">
+                                                Cancelar
+                                            </button>
+                                        </div>
+                                        <div *ngIf="isMembroCadastrado" style="margin: 0 auto; text-align: center;">
+                                            <button type="button" mat-raised-button color="primary" style="margin: 0 10px;"
+                                                    (click)="inserirSenha()">
+                                                    Gravar
+                                            </button>
                                         </div>
                                     </form>
                                 </div>

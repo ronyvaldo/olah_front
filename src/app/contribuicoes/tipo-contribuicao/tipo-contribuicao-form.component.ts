@@ -37,7 +37,6 @@ export class TipoContribuicaoFormComponent implements OnInit {
               private usuarioService : UsuariosService) { }
 
   ngOnInit(): void {
-    console.log("testou!");
     this.loginUsuarioLogado = this.usuarioService.getUsuarioAutenticado();
     this.definirDadosUsuarioLogado();
   }

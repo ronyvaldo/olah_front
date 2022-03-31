@@ -144,4 +144,14 @@ export class UsuariosService {
     return this.http.put<Usuario>(this.apiURLSenha + "/atualizar", atualizacaoSenha);
   }
 
+  pesquisaUsuarioSemAcesso(credencial: string) : Observable<Usuario> {
+    return this.http.get<Usuario>(this.apiURL + `/pesquisaUsuarioSemAcesso=${credencial}`);
+  }
+
+  inserirSenha(credencial: string, senha: string) : Observable<any> {
+    const params = new HttpParams()
+      .set('senha', senha);
+      return this.http.put<any>(this.apiURL + `/inserirSenha=${credencial}?${params.toString()}`, null);
+  }
+
 }
