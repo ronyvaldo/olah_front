@@ -178,8 +178,12 @@
                                         </div>
                                         <div *ngIf="isMembroCadastrado" style="margin: 0 auto; text-align: center;">
                                             <button type="button" mat-raised-button color="primary" style="margin: 0 10px;"
-                                                    (click)="inserirSenha()">
+                                                    (click)="inserirSenha()" [disabled]="!inserirSenhaLiberado()">
                                                     Gravar
+                                            </button>
+                                            <button type="button" (click)="cancelarCadastro()"
+                                                    mat-raised-button ml-1 color="warn">
+                                                Cancelar
                                             </button>
                                         </div>
                                     </form>
