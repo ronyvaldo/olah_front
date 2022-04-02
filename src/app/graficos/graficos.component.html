@@ -8,8 +8,8 @@
 <div class="row center">
     <div class="col-md-5 mt-2">
         <div class="form-group">
-            <select>
-                <option *ngFor="let igreja of igrejas" [ngValue]="idIgrejaSelecionada" [value]="idIgrejaSelecionada">
+            <select (change)="atribuirIgreja($event)">
+                <option *ngFor="let igreja of igrejas" [ngValue]="igreja.id" [value]="igreja.id">
                     {{ igreja.nome }}
                 </option>
             </select>

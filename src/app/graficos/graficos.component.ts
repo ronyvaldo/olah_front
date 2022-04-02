@@ -48,6 +48,7 @@ export class GraficosComponent implements OnInit {
   }
 
   gerarGrafico1() {
+    if (Chart.getChart(this.chartElement.nativeElement)) Chart.getChart(this.chartElement.nativeElement)?.destroy();
     if (this.chartElement) {
       new Chart(this.chartElement.nativeElement, {
         type: 'bar',
@@ -75,6 +76,7 @@ export class GraficosComponent implements OnInit {
   }
 
   gerarGrafico2() {
+    if (Chart.getChart(this.chartElement2.nativeElement)) Chart.getChart(this.chartElement2.nativeElement)?.destroy();
     if (this.chartElement2) {
       if (this.lancamentosDespesa.length > 0) {
         let labels = new Array;
@@ -107,6 +109,7 @@ export class GraficosComponent implements OnInit {
   }
 
   gerarGrafico3() {
+    if (Chart.getChart(this.chartElement3.nativeElement)) Chart.getChart(this.chartElement3.nativeElement)?.destroy();
     if (this.chartElement3) {
       if (this.lancamentosContribuicoes.length > 0) {
         let labels = new Array;
@@ -144,11 +147,14 @@ export class GraficosComponent implements OnInit {
         this.usuarioLogado = usuario;
         if (usuario.igrejas.length > 0) {
           this.igrejas = usuario.igrejas;
+          if (this.igrejas.length > 0) {
+            this.idIgrejaSelecionada = this.igrejas[0].id;
+          }
         } else {
           this.igrejasService.getIgrejasByGrupoCongregacional(usuario.grupoCongregacional.id)
             .toPromise().then(response => {
               this.igrejas = response;
-              if (this.igrejas.length >= 1) {
+              if (this.igrejas.length > 0) {
                 this.idIgrejaSelecionada = this.igrejas[0].id;
               }
             });
@@ -188,6 +194,13 @@ export class GraficosComponent implements OnInit {
         .toPromise().then(lancamentos => {
           this.lancamentosContribuicoes = lancamentos;
         })
+  }
+
+  atribuirIgreja(event:any) {
+    if (event.target && event.target != "") {
+      this.idIgrejaSelecionada = event.target.value;
+      this.definirIgrejaSelecionada();
+    }
   }
 
 }

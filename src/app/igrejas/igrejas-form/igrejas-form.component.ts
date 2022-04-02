@@ -123,7 +123,7 @@ export class IgrejasFormComponent implements OnInit {
   }
 
   definirGrupoDaIgreja() {
-    if (this.grupos.length == 1) {
+    if (this.grupos.length == 1 || !this.idGrupoSelecionado || this.idGrupoSelecionado == 0) {
       this.idGrupoSelecionado = this.grupos[0].id;
     }
     this.igreja.grupoCongregacional = new GrupoCongregacional();
