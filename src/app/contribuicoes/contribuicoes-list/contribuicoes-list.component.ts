@@ -62,7 +62,7 @@ export class ContribuicoesListComponent implements OnInit {
 
   deletarContribuicao() {
     this.service
-    .deletar(this.contribuicao)
+    .deletar(this.contribuicaoSelecionada)
     .subscribe(
       response => {
         this.mensagemSucesso = `Contribuição de valor ${this.contribuicaoSelecionada.valor} deletada com sucesso.`

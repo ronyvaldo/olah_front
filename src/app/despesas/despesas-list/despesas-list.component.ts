@@ -60,7 +60,7 @@ export class DespesasListComponent implements OnInit {
 
   deletarDespesa() {
     this.service
-    .deletar(this.despesa)
+    .deletar(this.despesaSelecionada)
     .subscribe(
       response => {
         this.mensagemSucesso = `Despesa de valor ${this.despesa.valor} deletada com sucesso.`
