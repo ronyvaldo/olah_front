@@ -28,8 +28,8 @@
     <br />
     <div class="row">
         <div class="col-md-12">
-            <table class="table table-condensed table-hover table-responsive">
-                <thead class="thead-light">
+            <table class="table table-condensed table-hover table-light table-bordered table-responsive">
+                <thead class="thead-dark">
                     <tr>
                         <th>ID</th>
                         <th>Login</th>
@@ -43,7 +43,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let usuario of usuarios">
+                    <tr class="select-line" *ngFor="let usuario of usuarios">
                         <td>{{ usuario.id }}</td>
                         <td>{{ usuario.login }}</td>
                         <td>{{ usuario.nome }}</td>

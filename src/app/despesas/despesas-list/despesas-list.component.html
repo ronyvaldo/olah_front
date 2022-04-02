@@ -21,10 +21,10 @@
         </div>
     </div>
     <br />
-    <div class="row center table-responsive">
+    <div class="row center">
         <div>
-            <table class="table table-condensed table-hover table-responsive">
-                <thead class="thead-light">
+            <table class="table table-condensed table-hover table-light table-bordered table-responsive">
+                <thead class="thead-dark">
                     <tr>
                         <th>ID</th>
                         <th>Tipo Despesa</th>
@@ -36,7 +36,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let despesa of despesas">
+                    <tr class="select-line" *ngFor="let despesa of despesas">
                         <td>{{ despesa.id }}</td>
                         <td>{{ despesa.tipoDespesa.nome }}</td>
                         <td>{{ despesa.valor | currency : 'BRL' }}</td>

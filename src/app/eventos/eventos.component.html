@@ -2,26 +2,18 @@
     <span class="material-icons" font-size="50px">event_note</span>
     <li style="font-weight: bold;">&nbsp;&nbsp;Eventos</li>
 </ol>
-<div *ngIf="perfilAdministrativo" class="container-fluid">
+<div *ngIf="perfilAdministrativo" class="container-fluid center">
     <div class="row">
         <div class="col">
             <div class="row center">
                 <div class="col-md-3 center">
-                    <div class="form-group">
-                        <table>
-                            <tr>
-                                <td>
-                                    <b>Selecione a igreja:</b>&nbsp;&nbsp;
-                                </td>
-                                <td>
-                                    <select>
-                                        <option *ngFor="let igreja of igrejas" [ngValue]="idIgrejaSelecionada" [value]="idIgrejaSelecionada">
-                                            {{ igreja.nome }}
-                                        </option>
-                                    </select>
-                                </td>
-                            </tr>
-                        </table>
+                    <div>
+                        <b>Selecione a igreja:</b>&nbsp;&nbsp;
+                        <select>
+                            <option *ngFor="let igreja of igrejas" [ngValue]="idIgrejaSelecionada" [value]="idIgrejaSelecionada">
+                                {{ igreja.nome }}
+                            </option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -32,16 +24,16 @@
                 </button>
             </div>
             <ng-container *ngIf="isEmpty===false">
-                <div class="table-responsive">
-                    <table class="table table-striped table-info">
-                        <thead>
+                <div>
+                    <table class="table table-condensed table-hover table-light table-bordered table-responsive">
+                        <thead class="thead-dark">
                             <tr>
                                 <th scope="col">Nome</th>
                                 <th scope="col">Data Início</th>
                                 <th scope="col">Data Término</th>
                                 <th scope="col">Horário Início</th>
                                 <th scope="col">Horário Término</th>
-                                <th scope="col">Ações</th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>

@@ -26,8 +26,8 @@
     <br />
     <div class="row center">
         <div>
-            <table class="table table-condensed table-hover table-responsive">
-                <thead class="thead-light">
+            <table class="table table-condensed table-hover table-light table-bordered table-responsive">
+                <thead class="thead-dark">
                     <tr>
                         <th>ID</th>
                         <th>Nome</th>
@@ -37,7 +37,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let igreja of igrejas">
+                    <tr class="select-line" *ngFor="let igreja of igrejas">
                         <td>{{ igreja.id }}</td>
                         <td>{{ igreja.nome }}</td>
                         <td>{{ igreja.dataCadastro }}</td>

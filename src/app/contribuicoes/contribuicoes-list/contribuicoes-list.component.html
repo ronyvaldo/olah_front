@@ -22,10 +22,10 @@
         </div>
     </div>
     <br />
-    <div class="row center table-responsive">
+    <div class="row center">
         <div>
-            <table class="table table-condensed table-hover table-responsive">
-                <thead class="thead-light">
+            <table class="table table-condensed table-hover table-light table-bordered table-responsive">
+                <thead class="thead-dark">
                     <tr>
                         <th>ID</th>
                         <th>Tipo Contribuição</th>
@@ -38,7 +38,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let contribuicao of contribuicoes">
+                    <tr class="select-line" *ngFor="let contribuicao of contribuicoes">
                         <td>{{ contribuicao.id }}</td>
                         <td>{{ contribuicao.tipoContribuicao.nome }}</td>
                         <td>{{ contribuicao.membro.nome }}</td>
