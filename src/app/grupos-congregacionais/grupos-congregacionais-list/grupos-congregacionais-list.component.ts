@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GruposCongregacionaisService } from 'src/app/services/grupoCongregacional.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
+import { Usuario } from 'src/app/usuarios/usuario';
 import { GrupoCongregacional } from '../grupoCongregacional';
 
 @Component({
@@ -21,24 +22,42 @@ export class GruposCongregacionaisListComponent implements OnInit {
   mensagemSucesso : String;
   mensagemErro : String;
   grupoSelecionado : GrupoCongregacional;
+  loginUsuarioLogado: string;
+  usuarioLogado: Usuario;
 
   constructor(private service : GruposCongregacionaisService,
               private usuarioService : UsuariosService,
               private router : Router) { }
 
   ngOnInit(): void {
-   this.listarIgrejas();
+    this.loginUsuarioLogado = this.usuarioService.getUsuarioAutenticado();
+    this.definirDadosDoUsuario();
+    setTimeout(() => this.listarGrupos(), 1000);
   }
 
-  listarIgrejas() {
-    this.service.getTodosPaged(this.paginaAtual.toString(), this.tamanho.toString())
-        .subscribe( response => {
-          this.gruposCongregacionais = response.content;
-          this.totalElementos = response.totalElements;
-          this.paginaAtual = response.number;
-          this.definirPaginas();
-        }, (erro: HttpErrorResponse) => erro.status == 403 ? this.forbidden() : console.log(erro.status)
-    )
+  definirDadosDoUsuario() {
+    this.usuarioService.getUsuarioByCredential(this.loginUsuarioLogado)
+      .toPromise().then(usuario => {
+        this.usuarioLogado = usuario;
+      });
+  }
+
+  listarGrupos() {
+    if (this.usuarioLogado.perfil == 3) {
+      this.service.getTodosPaged(this.paginaAtual.toString(), this.tamanho.toString())
+          .subscribe( response => {
+            this.gruposCongregacionais = response.content;
+            this.totalElementos = response.totalElements;
+            this.paginaAtual = response.number;
+            this.definirPaginas();
+          }, (erro: HttpErrorResponse) => erro.status == 403 ? this.forbidden() : console.log(erro.status)
+      )
+    } else {
+      if (this.usuarioLogado.grupoCongregacional) {
+        this.totalElementos = 1;
+        this.gruposCongregacionais[0] = this.usuarioLogado.grupoCongregacional;
+      }
+    }
   }
 
   novoGrupo() {
@@ -52,12 +71,12 @@ export class GruposCongregacionaisListComponent implements OnInit {
 
   handlePageSizeChange(event: any): void {
     this.tamanho = event.target.value;
-    this.listarIgrejas();
+    this.listarGrupos();
   }
 
   handlePageChange(page: number): void {
     this.paginaAtual = page;
-    this.listarIgrejas();
+    this.listarGrupos();
   }
 
   definirPaginas() {

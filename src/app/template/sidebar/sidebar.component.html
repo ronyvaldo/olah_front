@@ -38,7 +38,7 @@
                     <span class="material-icons" font-size="50px">house</span>
                     &nbsp;Igrejas
                 </a>
-                <a class="nav-link" routerLink="/gruposCongregacionais" *ngIf="perfilUsuarioLogado == 2 || perfilUsuarioLogado == 3">
+                <a class="nav-link" routerLink="/gruposCongregacionais" *ngIf="exibirItemGrupos || perfilUsuarioLogado == 3">
                     <span class="material-icons" font-size="50px">church</span>
                     &nbsp;Grupos Congregacionais
                 </a>

@@ -18,6 +18,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   usuarioLogado: Usuario;
   infoCongregacao: string;
   perfilUsuarioLogado: number;
+  exibirItemGrupos: boolean;
 
   constructor(
     private usuarioService : UsuariosService,
@@ -37,6 +38,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
         if (usuario.igrejas.length > 0) {
           this.infoCongregacao = usuario.igrejas[0].nome;
         } else if (usuario.grupoCongregacional) {
+          this.exibirItemGrupos = true;
           this.infoCongregacao = usuario.grupoCongregacional.nome;
         }
         this.perfilUsuarioLogado = usuario.perfil;

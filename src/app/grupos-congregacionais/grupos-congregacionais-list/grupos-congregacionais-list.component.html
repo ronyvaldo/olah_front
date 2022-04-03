@@ -13,10 +13,10 @@
              </div>
         </div>
     </div>
-    <div class="row col-md-5">
+    <div *ngIf="usuarioLogado && usuarioLogado.perfil == 3" class="row col-md-5">
         <div class="button-container">
             <button mat-mini-fab color="primary" 
-                title="Adicionar Igreja"
+                title="Adicionar Grupo Congregacional"
                 style="border:none;"
                 (click)="novoGrupo()">
                 <i class="material-icons" style="font-size: 35px; color:darkblue;">add_circle</i>
