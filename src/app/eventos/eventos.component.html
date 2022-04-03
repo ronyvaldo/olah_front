@@ -2,18 +2,26 @@
     <span class="material-icons" font-size="50px">event_note</span>
     <li style="font-weight: bold;">&nbsp;&nbsp;Eventos</li>
 </ol>
-<div *ngIf="perfilAdministrativo" class="container-fluid center">
+<div *ngIf="perfilAdministrativo" class="container-fluid">
     <div class="row">
         <div class="col">
             <div class="row center">
                 <div class="col-md-3 center">
-                    <div>
-                        <b>Selecione a igreja:</b>&nbsp;&nbsp;
-                        <select>
-                            <option *ngFor="let igreja of igrejas" [ngValue]="idIgrejaSelecionada" [value]="idIgrejaSelecionada">
-                                {{ igreja.nome }}
-                            </option>
-                        </select>
+                    <div class="form-group">
+                        <table>
+                            <tr>
+                                <td>
+                                    <b>Selecione a igreja:</b>&nbsp;&nbsp;
+                                </td>
+                                <td>
+                                    <select>
+                                        <option *ngFor="let igreja of igrejas" [ngValue]="idIgrejaSelecionada" [value]="idIgrejaSelecionada">
+                                            {{ igreja.nome }}
+                                        </option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -23,8 +31,12 @@
                     <fa-icon [icon]="farCalendarPlus" size="2x"></fa-icon>&nbsp;&nbsp;Adicionar Evento
                 </button>
             </div>
-            <ng-container *ngIf="isEmpty===false">
-                <div>
+        </div>
+    </div>
+    <app-cadastrar-evento #alterarComponent (attEventos)="listarEventos() " [idEvento]="idEvento "></app-cadastrar-evento>
+</div>
+<div class="row center" *ngIf="isEmpty===false && perfilAdministrativo">
+    <div style="overflow-x:auto;">
                     <table class="table table-condensed table-hover table-light table-bordered table-responsive">
                         <thead class="thead-dark">
                             <tr>
@@ -33,7 +45,7 @@
                                 <th scope="col">Data Término</th>
                                 <th scope="col">Horário Início</th>
                                 <th scope="col">Horário Término</th>
-                                <th scope="col"></th>
+                                <th scope="col">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -70,11 +82,7 @@
                         </ul>
                     </div>
                 </div>
-            </ng-container>
-            <app-cadastrar-evento #alterarComponent (attEventos)="listarEventos() " [idEvento]="idEvento "></app-cadastrar-evento>
-        </div>
-    </div>
-</div>
+            </div>
 
 
 <div id="modalExclusaoContribuicao" class="modal fade" role="dialog">
